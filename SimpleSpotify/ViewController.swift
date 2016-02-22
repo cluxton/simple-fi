@@ -9,18 +9,16 @@
 import UIKit
 
 class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPlaybackDelegate {
-
-    let kClientID = "08860c10e16e4261a57a40469500a733"
-    let kCallbackURL = "simplespotify://returnafterlogin"
-    let kTokenSwapURL = "https://radiant-headland-43693.herokuapp.com/swap"
-    let kTokenRefreshURL = "https://radiant-headland-43693.herokuapp.com/refresh"
     
     var player: SPTAudioStreamingController?
+    var spotifyAuthVC: SPTAuthViewController?
+    
     let spotifyAuthenticator = SPTAuth.defaultInstance()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleSpotifySessionUpdated", name: "SPTSessionUpdated", object: nil)
+        setupSpotifyPlayer()
                 // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -30,19 +28,14 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     }
     
     @IBAction func loginWithSpotify(sender: AnyObject) {
-        spotifyAuthenticator.clientID = kClientID
-        spotifyAuthenticator.requestedScopes = [SPTAuthStreamingScope]
-        spotifyAuthenticator.redirectURL = NSURL(string: kCallbackURL)
-        spotifyAuthenticator.tokenSwapURL = NSURL(string: kTokenSwapURL)
-        spotifyAuthenticator.tokenRefreshURL = NSURL(string: kTokenRefreshURL)
         
-        let spotifyAuthVC = SPTAuthViewController.authenticationViewController()
-        spotifyAuthVC.delegate = self
-        spotifyAuthVC.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
+        spotifyAuthVC = SPTAuthViewController.authenticationViewController()
+        spotifyAuthVC!.delegate = self
+        spotifyAuthVC!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         
-        spotifyAuthVC.definesPresentationContext = true
+        spotifyAuthVC!.definesPresentationContext = true
         print("PRESENT")
-        presentViewController(spotifyAuthVC, animated: false, completion: nil)
+        presentViewController(spotifyAuthVC!, animated: false, completion: nil)
         
     }
     
@@ -50,7 +43,7 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
         print("SETUP PLAYER")
-        setupSpotifyPlayer()
+        //setupSpotifyPlayer()
         loginWithSpotifySession(session)
     }
     
@@ -85,6 +78,12 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     func useLoggedInPermissions() {
         let spotifyURI = "spotify:track:1WJk986df8mpqpktoktlce"
         player!.playURIs([NSURL(string: spotifyURI)!], withOptions: nil, callback: nil)
+        performSegueWithIdentifier("showHome", sender: self)
+    }
+    
+    func handleSpotifySessionUpdated() {
+        spotifyAuthVC!.dismissViewControllerAnimated(true, completion: nil)
+        loginWithSpotifySession(spotifyAuthenticator.session)
     }
 
 

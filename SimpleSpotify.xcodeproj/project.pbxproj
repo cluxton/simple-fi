@@ -18,6 +18,7 @@
 		56FADA3F1C7AD12200C5038B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56FADA3E1C7AD12200C5038B /* AVFoundation.framework */; };
 		56FADA411C7AD12F00C5038B /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56FADA401C7AD12F00C5038B /* Spotify.framework */; };
 		56FADA471C7ADA3200C5038B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56FADA461C7ADA3200C5038B /* SystemConfiguration.framework */; };
+		56FADA491C7B040F00C5038B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA481C7B040F00C5038B /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		56FADA401C7AD12F00C5038B /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		56FADA421C7AD38400C5038B /* SimpleSpotify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleSpotify-Bridging-Header.h"; sourceTree = "<group>"; };
 		56FADA461C7ADA3200C5038B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		56FADA481C7B040F00C5038B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				56FADA181C7ACFAA00C5038B /* Info.plist */,
 				56FADA101C7ACFAA00C5038B /* SimpleSpotify.xcdatamodeld */,
 				56FADA421C7AD38400C5038B /* SimpleSpotify-Bridging-Header.h */,
+				56FADA481C7B040F00C5038B /* HomeViewController.swift */,
 			);
 			path = SimpleSpotify;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				56FADA121C7ACFAA00C5038B /* SimpleSpotify.xcdatamodeld in Sources */,
 				56FADA0C1C7ACFAA00C5038B /* ViewController.swift in Sources */,
 				56FADA0A1C7ACFAA00C5038B /* AppDelegate.swift in Sources */,
+				56FADA491C7B040F00C5038B /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

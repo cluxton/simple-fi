@@ -9,15 +9,50 @@
 import UIKit
 import CoreData
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    let kClientID = "08860c10e16e4261a57a40469500a733"
+    let kCallbackURL = "simplespotify://"
+    let kTokenSwapURL = "https://radiant-headland-43693.herokuapp.com/swap"
+    let kTokenRefreshURL = "https://radiant-headland-43693.herokuapp.com/refresh"
+    let kSessionUserDefaultsKey = "SpotifySession"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        let auth = SPTAuth.defaultInstance()
+        auth.clientID = kClientID
+        auth.requestedScopes = [SPTAuthStreamingScope]
+        auth.redirectURL = NSURL(string: kCallbackURL)
+        //auth.tokenSwapURL = NSURL(string: kTokenSwapURL)
+        //auth.tokenRefreshURL = NSURL(string: kTokenRefreshURL)
+        auth.sessionUserDefaultsKey = kSessionUserDefaultsKey
+        
+        print("TEST!")
         return true
+    }
+    func application(app: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        let auth = SPTAuth.defaultInstance()
+
+        let callback: SPTAuthCallback = { (error: NSError!, session: SPTSession!) in
+            if error != nil {
+                print("Couldn't login with session: \(error)")
+                return
+            }
+            auth.session = session
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("SPTSessionUpdated", object: self)
+        }
+        
+        if (auth.canHandleURL(url)) {
+            auth.handleAuthCallbackWithTriggeredAuthURL(url, callback: callback)
+            return true
+        }
+        
+        return false
     }
 
     func applicationWillResignActive(application: UIApplication) {

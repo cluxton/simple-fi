@@ -24,7 +24,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.cluxton.SimpleSpotify.auth</string>
+			<string>com.cluxton.simple-spotify-auth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>simplespotify</string>
