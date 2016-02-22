@@ -15,6 +15,9 @@
 		56FADA171C7ACFAA00C5038B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56FADA151C7ACFAA00C5038B /* LaunchScreen.storyboard */; };
 		56FADA221C7ACFAA00C5038B /* SimpleSpotifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA211C7ACFAA00C5038B /* SimpleSpotifyTests.swift */; };
 		56FADA2D1C7ACFAA00C5038B /* SimpleSpotifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA2C1C7ACFAA00C5038B /* SimpleSpotifyUITests.swift */; };
+		56FADA3F1C7AD12200C5038B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56FADA3E1C7AD12200C5038B /* AVFoundation.framework */; };
+		56FADA411C7AD12F00C5038B /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56FADA401C7AD12F00C5038B /* Spotify.framework */; };
+		56FADA471C7ADA3200C5038B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56FADA461C7ADA3200C5038B /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,10 @@
 		56FADA281C7ACFAA00C5038B /* SimpleSpotifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleSpotifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		56FADA2C1C7ACFAA00C5038B /* SimpleSpotifyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSpotifyUITests.swift; sourceTree = "<group>"; };
 		56FADA2E1C7ACFAA00C5038B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		56FADA3E1C7AD12200C5038B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		56FADA401C7AD12F00C5038B /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
+		56FADA421C7AD38400C5038B /* SimpleSpotify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleSpotify-Bridging-Header.h"; sourceTree = "<group>"; };
+		56FADA461C7ADA3200C5038B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +63,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56FADA471C7ADA3200C5038B /* SystemConfiguration.framework in Frameworks */,
+				56FADA411C7AD12F00C5038B /* Spotify.framework in Frameworks */,
+				56FADA3F1C7AD12200C5038B /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +89,9 @@
 		56FAD9FD1C7ACFAA00C5038B = {
 			isa = PBXGroup;
 			children = (
+				56FADA461C7ADA3200C5038B /* SystemConfiguration.framework */,
+				56FADA401C7AD12F00C5038B /* Spotify.framework */,
+				56FADA3E1C7AD12200C5038B /* AVFoundation.framework */,
 				56FADA081C7ACFAA00C5038B /* SimpleSpotify */,
 				56FADA201C7ACFAA00C5038B /* SimpleSpotifyTests */,
 				56FADA2B1C7ACFAA00C5038B /* SimpleSpotifyUITests */,
@@ -106,6 +119,7 @@
 				56FADA151C7ACFAA00C5038B /* LaunchScreen.storyboard */,
 				56FADA181C7ACFAA00C5038B /* Info.plist */,
 				56FADA101C7ACFAA00C5038B /* SimpleSpotify.xcdatamodeld */,
+				56FADA421C7AD38400C5038B /* SimpleSpotify-Bridging-Header.h */,
 			);
 			path = SimpleSpotify;
 			sourceTree = "<group>";
@@ -403,10 +417,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SimpleSpotify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cluxton.SimpleSpotify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SimpleSpotify/SimpleSpotify-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -414,10 +436,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SimpleSpotify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cluxton.SimpleSpotify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SimpleSpotify/SimpleSpotify-Bridging-Header.h";
 			};
 			name = Release;
 		};
