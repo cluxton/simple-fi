@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -19,12 +20,12 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTu-rS-RLR">
                                 <rect key="frame" x="217" y="531" width="167" height="38"/>
-                                <color key="backgroundColor" red="0.62745098040000002" green="1" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.46666666666666667" green="1" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="Jia-bo-SFd"/>
                                     <constraint firstAttribute="width" constant="167" id="tpZ-Od-BPO"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <state key="normal" title="Login to Spotify">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -60,12 +61,66 @@
                     <view key="view" contentMode="scaleToFill" id="ifo-bN-J47">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Vbs-hM-EZl">
+                                <rect key="frame" x="160" y="138" width="280" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="460-6H-lMT"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Artists"/>
+                                    <segment title="Albums"/>
+                                    <segment title="Songs"/>
+                                </segments>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pUD-Gn-ZAG">
+                                <rect key="frame" x="20" y="79" width="560" height="44"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search for songs, albums and artists" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k8m-NU-nhP">
+                                        <rect key="frame" x="8" y="0.0" width="544" height="44"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="k8m-NU-nhP" firstAttribute="top" secondItem="pUD-Gn-ZAG" secondAttribute="top" id="1WY-zY-cId"/>
+                                    <constraint firstAttribute="bottom" secondItem="k8m-NU-nhP" secondAttribute="bottom" id="8yS-nz-Oo7"/>
+                                    <constraint firstItem="k8m-NU-nhP" firstAttribute="leading" secondItem="pUD-Gn-ZAG" secondAttribute="leading" constant="8" id="Fzj-cU-Azi"/>
+                                    <constraint firstAttribute="trailing" secondItem="k8m-NU-nhP" secondAttribute="trailing" constant="8" id="HIO-J9-Ka6"/>
+                                    <constraint firstAttribute="height" constant="44" id="spp-mi-XSw"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rEV-yN-OdX">
+                                <rect key="frame" x="20" y="183" width="560" height="397"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.03071090148" green="0.1099115799" blue="0.2215238531" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="rEV-yN-OdX" firstAttribute="trailing" secondItem="ifo-bN-J47" secondAttribute="trailingMargin" id="Kiv-ME-JbB"/>
+                            <constraint firstItem="rEV-yN-OdX" firstAttribute="top" secondItem="Vbs-hM-EZl" secondAttribute="bottom" constant="17" id="Nuh-I6-e27"/>
+                            <constraint firstItem="ZtE-gT-yi0" firstAttribute="top" secondItem="rEV-yN-OdX" secondAttribute="bottom" constant="20" id="TDp-L8-v1g"/>
+                            <constraint firstItem="pUD-Gn-ZAG" firstAttribute="top" secondItem="Rdk-DH-d8j" secondAttribute="bottom" constant="15" id="aAq-xy-cbs"/>
+                            <constraint firstItem="rEV-yN-OdX" firstAttribute="leading" secondItem="ifo-bN-J47" secondAttribute="leadingMargin" id="c5W-UR-C3a"/>
+                            <constraint firstItem="Vbs-hM-EZl" firstAttribute="top" secondItem="pUD-Gn-ZAG" secondAttribute="bottom" constant="15" id="p6k-tK-9Gy"/>
+                            <constraint firstItem="pUD-Gn-ZAG" firstAttribute="leading" secondItem="ifo-bN-J47" secondAttribute="leadingMargin" id="rmw-tT-xcs"/>
+                            <constraint firstItem="Vbs-hM-EZl" firstAttribute="centerX" secondItem="ifo-bN-J47" secondAttribute="centerX" id="wU9-P8-G2j"/>
+                            <constraint firstItem="pUD-Gn-ZAG" firstAttribute="trailing" secondItem="ifo-bN-J47" secondAttribute="trailingMargin" id="x3x-bF-8UN"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="searchField" destination="k8m-NU-nhP" id="CWS-8t-K6z"/>
+                        <outlet property="searchFieldWrapper" destination="pUD-Gn-ZAG" id="cPd-Ho-Gck"/>
+                        <outlet property="searchTypeRadio" destination="Vbs-hM-EZl" id="68t-Ua-6KH"/>
+                        <outlet property="tableView" destination="rEV-yN-OdX" id="ZsA-Ls-lOe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ye-WI-k4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1242" y="1127"/>
+            <point key="canvasLocation" x="1257" y="1152"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="b06-XR-t4C">

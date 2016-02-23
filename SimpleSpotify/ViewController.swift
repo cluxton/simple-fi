@@ -42,9 +42,9 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     // SPTAuthViewDelegate protocol methods
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
-        print("SETUP PLAYER")
-        //setupSpotifyPlayer()
-        loginWithSpotifySession(session)
+        print("AUTH VC DELEGATE SUCCESS");
+        spotifyAuthenticator.session = session;
+        NSNotificationCenter.defaultCenter().postNotificationName("SPTSessionUpdated", object: self)
     }
     
     func authenticationViewControllerDidCancelLogin(authenticationViewController: SPTAuthViewController!) {
@@ -82,8 +82,10 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     }
     
     func handleSpotifySessionUpdated() {
+        print("LOGON SUCCESS");
         spotifyAuthVC!.dismissViewControllerAnimated(true, completion: nil)
-        loginWithSpotifySession(spotifyAuthenticator.session)
+        performSegueWithIdentifier("showHome", sender: self)
+        //loginWithSpotifySession(spotifyAuthenticator.session)
     }
 
 
