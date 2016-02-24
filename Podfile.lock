@@ -1,4 +1,7 @@
 PODS:
+  - Alamofire (3.2.0)
+  - AlamofireImage (2.3.1):
+    - Alamofire (~> 3.2)
   - EVReflection (2.18.0)
   - RxBlocking (2.2.0):
     - RxSwift (~> 2.2)
@@ -7,12 +10,15 @@ PODS:
   - RxSwift (2.2.0)
 
 DEPENDENCIES:
+  - AlamofireImage (~> 2.0)
   - EVReflection
   - RxBlocking (~> 2.0)
   - RxCocoa (~> 2.0)
   - RxSwift (~> 2.0)
 
 SPEC CHECKSUMS:
+  Alamofire: 4da478599fccddff361205c8929333d7fe18dceb
+  AlamofireImage: e52336282757bbe1644f075d6cb85f19c891f939
   EVReflection: f9cfd29f733f2272c67e76757a20f23d8b97d2f2
   RxBlocking: 5bbc826774c4290effa8fe070841e9d45e864639
   RxCocoa: 42efb7a7145a8d1d5878e94ce48a580d29e0c796

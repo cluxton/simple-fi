@@ -8,6 +8,7 @@ target 'SimpleSpotify' do
 	pod 'RxSwift',    '~> 2.0'
     pod 'RxCocoa',    '~> 2.0'
     pod 'RxBlocking', '~> 2.0'
+    pod 'AlamofireImage', '~> 2.0'
 end
 
 target 'SimpleSpotifyTests' do

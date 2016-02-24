@@ -9,6 +9,17 @@
 /* Begin PBXBuildFile section */
 		1ACF12FB8A8B7E3A23FD0902 /* Pods_SimpleSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5526DE1923BFB2719F9BEB /* Pods_SimpleSpotify.framework */; };
 		56B4518C1C7BFF8B008130E4 /* SpotifyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B4518B1C7BFF8B008130E4 /* SpotifyApi.swift */; };
+		56B4518E1C7C64D5008130E4 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B4518D1C7C64D5008130E4 /* ArtistViewController.swift */; };
+		56B451901C7C6518008130E4 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B4518F1C7C6518008130E4 /* AlbumViewController.swift */; };
+		56B451921C7C681F008130E4 /* SongTableViewSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B451911C7C681F008130E4 /* SongTableViewSource.swift */; };
+		56B451941C7C6A27008130E4 /* AlbumCollectionViewSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B451931C7C6A27008130E4 /* AlbumCollectionViewSource.swift */; };
+		56B451971C7C6A8F008130E4 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B451951C7C6A8F008130E4 /* SongTableViewCell.swift */; };
+		56B451981C7C6A8F008130E4 /* SongTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56B451961C7C6A8F008130E4 /* SongTableViewCell.xib */; };
+		56B4519B1C7C6AC2008130E4 /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B451991C7C6AC2008130E4 /* AlbumCollectionViewCell.swift */; };
+		56B4519C1C7C6AC2008130E4 /* AlbumCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56B4519A1C7C6AC2008130E4 /* AlbumCollectionViewCell.xib */; };
+		56B4519E1C7D3A44008130E4 /* AlbumTableViewSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B4519D1C7D3A44008130E4 /* AlbumTableViewSource.swift */; };
+		56B451A11C7D3AE4008130E4 /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B4519F1C7D3AE4008130E4 /* AlbumTableViewCell.swift */; };
+		56B451A21C7D3AE4008130E4 /* AlbumTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56B451A01C7D3AE4008130E4 /* AlbumTableViewCell.xib */; };
 		56FADA0A1C7ACFAA00C5038B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA091C7ACFAA00C5038B /* AppDelegate.swift */; };
 		56FADA0C1C7ACFAA00C5038B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA0B1C7ACFAA00C5038B /* ViewController.swift */; };
 		56FADA0F1C7ACFAA00C5038B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56FADA0D1C7ACFAA00C5038B /* Main.storyboard */; };
@@ -44,6 +55,17 @@
 		25C1262E084EAC61361BBD59 /* Pods-SimpleSpotify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleSpotify.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleSpotify/Pods-SimpleSpotify.release.xcconfig"; sourceTree = "<group>"; };
 		3A5526DE1923BFB2719F9BEB /* Pods_SimpleSpotify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleSpotify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56B4518B1C7BFF8B008130E4 /* SpotifyApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyApi.swift; sourceTree = "<group>"; };
+		56B4518D1C7C64D5008130E4 /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
+		56B4518F1C7C6518008130E4 /* AlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
+		56B451911C7C681F008130E4 /* SongTableViewSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewSource.swift; sourceTree = "<group>"; };
+		56B451931C7C6A27008130E4 /* AlbumCollectionViewSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewSource.swift; sourceTree = "<group>"; };
+		56B451951C7C6A8F008130E4 /* SongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
+		56B451961C7C6A8F008130E4 /* SongTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongTableViewCell.xib; sourceTree = "<group>"; };
+		56B451991C7C6AC2008130E4 /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
+		56B4519A1C7C6AC2008130E4 /* AlbumCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumCollectionViewCell.xib; sourceTree = "<group>"; };
+		56B4519D1C7D3A44008130E4 /* AlbumTableViewSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewSource.swift; sourceTree = "<group>"; };
+		56B4519F1C7D3AE4008130E4 /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
+		56B451A01C7D3AE4008130E4 /* AlbumTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumTableViewCell.xib; sourceTree = "<group>"; };
 		56D0D9AA1C7BEA240061CE4D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		56FADA061C7ACFAA00C5038B /* SimpleSpotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleSpotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56FADA091C7ACFAA00C5038B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +165,17 @@
 				56FADA421C7AD38400C5038B /* SimpleSpotify-Bridging-Header.h */,
 				56FADA481C7B040F00C5038B /* HomeViewController.swift */,
 				56B4518B1C7BFF8B008130E4 /* SpotifyApi.swift */,
+				56B4518D1C7C64D5008130E4 /* ArtistViewController.swift */,
+				56B4518F1C7C6518008130E4 /* AlbumViewController.swift */,
+				56B451911C7C681F008130E4 /* SongTableViewSource.swift */,
+				56B4519D1C7D3A44008130E4 /* AlbumTableViewSource.swift */,
+				56B451931C7C6A27008130E4 /* AlbumCollectionViewSource.swift */,
+				56B451951C7C6A8F008130E4 /* SongTableViewCell.swift */,
+				56B451961C7C6A8F008130E4 /* SongTableViewCell.xib */,
+				56B4519F1C7D3AE4008130E4 /* AlbumTableViewCell.swift */,
+				56B451A01C7D3AE4008130E4 /* AlbumTableViewCell.xib */,
+				56B451991C7C6AC2008130E4 /* AlbumCollectionViewCell.swift */,
+				56B4519A1C7C6AC2008130E4 /* AlbumCollectionViewCell.xib */,
 			);
 			path = SimpleSpotify;
 			sourceTree = "<group>";
@@ -281,9 +314,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56B451981C7C6A8F008130E4 /* SongTableViewCell.xib in Resources */,
 				56FADA171C7ACFAA00C5038B /* LaunchScreen.storyboard in Resources */,
+				56B4519C1C7C6AC2008130E4 /* AlbumCollectionViewCell.xib in Resources */,
 				56FADA141C7ACFAA00C5038B /* Assets.xcassets in Resources */,
 				56FADA0F1C7ACFAA00C5038B /* Main.storyboard in Resources */,
+				56B451A21C7D3AE4008130E4 /* AlbumTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,9 +394,17 @@
 			files = (
 				56FADA121C7ACFAA00C5038B /* SimpleSpotify.xcdatamodeld in Sources */,
 				56FADA0C1C7ACFAA00C5038B /* ViewController.swift in Sources */,
+				56B451971C7C6A8F008130E4 /* SongTableViewCell.swift in Sources */,
 				56FADA0A1C7ACFAA00C5038B /* AppDelegate.swift in Sources */,
 				56FADA491C7B040F00C5038B /* HomeViewController.swift in Sources */,
 				56B4518C1C7BFF8B008130E4 /* SpotifyApi.swift in Sources */,
+				56B4518E1C7C64D5008130E4 /* ArtistViewController.swift in Sources */,
+				56B451901C7C6518008130E4 /* AlbumViewController.swift in Sources */,
+				56B451921C7C681F008130E4 /* SongTableViewSource.swift in Sources */,
+				56B4519B1C7C6AC2008130E4 /* AlbumCollectionViewCell.swift in Sources */,
+				56B451A11C7D3AE4008130E4 /* AlbumTableViewCell.swift in Sources */,
+				56B4519E1C7D3A44008130E4 /* AlbumTableViewSource.swift in Sources */,
+				56B451941C7C6A27008130E4 /* AlbumCollectionViewSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

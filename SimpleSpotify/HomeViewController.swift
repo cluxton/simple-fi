@@ -24,6 +24,7 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     let spotifyAuthenticator = SPTAuth.defaultInstance()
     var player: SPTAudioStreamingController?
     var searchResponse: SpotifySearchRepsonse?
+    var selectedArtist: SpotifyArtist?
     
     @IBOutlet weak var searchFieldWrapper: UIView!
     @IBOutlet weak var searchField: UITextField!
@@ -43,9 +44,7 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
         searchField.keyboardAppearance = UIKeyboardAppearance.Dark
         
         setupSpotifyPlayer()
-        
-        let disposeBag = DisposeBag.init()
-        
+                
         let searchTextUpdated = self.searchField.rx_text
             .debounce(0.5, scheduler: MainScheduler.instance)
             .filter { s -> Bool in s.characters.count > 0 }
@@ -73,7 +72,7 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
             .debounce(0.5, scheduler: MainScheduler.instance)
             .subscribeNext { parameters in
                 print("Searching")
-                SpotifyApi.Search(parameters.query, type: parameters.searchType) { (response: SpotifySearchRepsonse?, error: NSError?) in
+                SpotifyApi.search(parameters.query, type: parameters.searchType) { (response: SpotifySearchRepsonse?, error: NSError?) in
                     if (response != nil) {
                         self.searchResponse = response
                         self.tableView.reloadData()
@@ -101,6 +100,15 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
         })
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showArtist") {
+            let vc = segue.destinationViewController as? ArtistViewController
+            if (selectedArtist != nil) {
+                vc?.artist = selectedArtist
+            }
+        }
+    }
+    
     private
     
     func setupSpotifyPlayer() {
@@ -111,7 +119,7 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     
     func playTrack(session: SPTSession, track: String) {
         
-        self.player!.playURIs([NSURL(string: "spotify:track:" + track)!], withOptions: nil, callback: nil)
+        self.player!.playURIs([NSURL(string: track)!], withOptions: nil, callback: nil)
         
     }
     
@@ -182,6 +190,9 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.section == TrackSection) {
             playTrack(spotifyAuthenticator.session, track: searchResponse!.tracks.items[indexPath.row].id)
+        } else if (indexPath.section == ArtistSection) {
+            selectedArtist = searchResponse!.artists.items[indexPath.row]
+            performSegueWithIdentifier("showArtist", sender: self)
         }
     }
     

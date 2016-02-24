@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("TEST!")
         return true
     }
-    func application(app: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    func application(app: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         let auth = SPTAuth.defaultInstance()
 
         let callback: SPTAuthCallback = { (error: NSError!, session: SPTSession!) in
