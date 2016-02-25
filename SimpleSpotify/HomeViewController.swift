@@ -24,6 +24,9 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     let spotifyAuthenticator = SPTAuth.defaultInstance()
     var searchResponse: SpotifySearchRepsonse?
     var selectedArtist: SpotifyArtist?
+    var selectedAlbum: SpotifyAlbum?
+    
+    
     var playQueue: PlayQueueManager?
     
     @IBOutlet weak var searchFieldWrapper: UIView!
@@ -96,14 +99,18 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     
     override func viewDidAppear(animated: Bool) {
         print("VIEW DID APPEAR")
+        if (searchResponse == nil) {
+            searchField.becomeFirstResponder()
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showArtist") {
             let vc = segue.destinationViewController as? ArtistViewController
-            if (selectedArtist != nil) {
-                vc?.artist = selectedArtist
-            }
+            vc?.artist = selectedArtist
+        } else if (segue.identifier == "showAlbum") {
+            let vc = segue.destinationViewController as? AlbumViewController
+            vc?.album = selectedAlbum
         }
     }
     
@@ -181,6 +188,10 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
         } else if (indexPath.section == ArtistSection) {
             selectedArtist = searchResponse!.artists.items[indexPath.row]
             performSegueWithIdentifier("showArtist", sender: self)
+        } else if (indexPath.section == AlbumSection) {
+            selectedAlbum = searchResponse!.albums.items[indexPath.row]
+            performSegueWithIdentifier("showAlbum", sender: self)
+
         }
     }
     

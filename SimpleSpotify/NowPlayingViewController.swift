@@ -103,7 +103,7 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
         
         if let tv = tableView {
             tableSource.setData(playQueue!.getQueue())
-            tv.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Top)
+            tv.reloadData()
         }
     }
     

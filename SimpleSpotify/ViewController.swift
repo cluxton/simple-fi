@@ -39,6 +39,28 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     }
     
     @IBAction func loginWithSpotify(sender: AnyObject) {
+        if let session = spotifyAuthenticator.session {
+            print("EXISTING SESSION")
+            
+            if (session.isValid()) {
+                print("  Session is valid")
+                performSegueWithIdentifier("showHome", sender: self)
+                return
+            }
+            
+            if (!session.isValid() && spotifyAuthenticator.hasTokenRefreshService) {
+                print("  renewing session")
+                spotifyAuthenticator.renewSession(session) { (error: NSError!, session: SPTSession!) in
+                    if error != nil {
+                        print("    Couldn't login with session: \(error)")
+                        return
+                    }
+                    print("    SESSION RENEWED")
+                    
+                }
+            }
+        }
+        
         
         spotifyAuthVC = SPTAuthViewController.authenticationViewController()
         spotifyAuthVC!.delegate = self
@@ -63,43 +85,14 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     }
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!) {
-        print("login failed")
+        print("login failed: \(error)")
     }
     
     func handleSpotifySessionUpdated() {
         print("LOGON SUCCESS");
         spotifyAuthVC!.dismissViewControllerAnimated(true, completion: nil)
         performSegueWithIdentifier("showHome", sender: self)
-        //loginWithSpotifySession(spotifyAuthenticator.session)
     }
-    
-    
-    
-    
-//    func setupSpotifyPlayer() {
-//        player = SPTAudioStreamingController(clientId: spotifyAuthenticator.clientID)
-//        player!.playbackDelegate = self
-//        player!.diskCache = SPTDiskCache(capacity: 1024 * 1024 * 64)
-//    }
-    
-//    func loginWithSpotifySession(session: SPTSession) {
-//        player!.loginWithSession(session, callback: { (error: NSError!) in
-//            if error != nil {
-//                print("Couldn't login with session: \(error)")
-//                return
-//            }
-//            self.useLoggedInPermissions()
-//        })
-//    }
-    
-//    func useLoggedInPermissions() {
-//        let spotifyURI = "spotify:track:1WJk986df8mpqpktoktlce"
-//        player!.playURIs([NSURL(string: spotifyURI)!], withOptions: nil, callback: nil)
-//        performSegueWithIdentifier("showHome", sender: self)
-//    }
-    
-    
-
 
 }
 

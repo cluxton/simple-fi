@@ -12,6 +12,8 @@ import AlamofireImage
 public class SongTableViewSource: NSObject, UITableViewDataSource, UITableViewDelegate, SongCellDelegate {
     
     public var imageDownloader: ImageDownloader?
+    public var playQueue: PlayQueueManager?
+    
     var tracks: [SpotifyTrack] = []
     var selectedTrackIndex : NSIndexPath?
     
@@ -66,11 +68,15 @@ public class SongTableViewSource: NSObject, UITableViewDataSource, UITableViewDe
     }
     
     public func playSong(track: SpotifyTrack) {
-        print(track.uri)
+        if let queue = self.playQueue {
+            queue.playSongImmediate(track)
+        }
     }
     
     public func queueSong(track: SpotifyTrack) {
-        print(track.uri)
+        if let queue = self.playQueue {
+            queue.queueSong(track)
+        }
     }
     
     

@@ -42,7 +42,6 @@ public class AlbumViewController: UIViewController {
         tableView.delegate = tableSource
         tableView.dataSource = tableSource
         
-        
         albumName!.text = album?.name
         albumArtist!.text = ""
         albumInfo!.text = ""
@@ -50,6 +49,7 @@ public class AlbumViewController: UIViewController {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         playQueue = appDelegate.playQueue
         
+        tableSource.playQueue = playQueue!
         
         // Do any additional setup after loading the view.
     }

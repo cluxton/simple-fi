@@ -127,11 +127,9 @@ public class SpotifyApi {
         
         do {
             let request = try SPTArtist.createRequestForTopTracksForArtist(NSURL(string: artist), withAccessToken: at, market: "AU")
-            SPTRequest.sharedHandler().performRequest(request) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
-                
+            SPTRequest.sharedHandler().performRequest(request) { (error: NSError!, response: NSURLResponse!, data: NSData!) in                
 //                let str = NSString(data: data, encoding: NSUTF8StringEncoding)
 //                print(str)
-                
                 let searchResponse = SpotifyTracksResponse(json: String(data: data, encoding: NSUTF8StringEncoding));
                 callback(searchResponse, nil)
             }
