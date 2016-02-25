@@ -9,9 +9,14 @@
 import UIKit
 import AlamofireImage
 
+public protocol AlbumTableDelegate {
+    func albumSelected(album: SpotifyAlbum)
+}
+
 public class AlbumTableViewSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     public var imageDownloader: ImageDownloader?
+    public var albumTableDelegate: AlbumTableDelegate?
 
     var albums: [SpotifyAlbum] = []
     var selectedAlbumIndex : NSIndexPath?
@@ -68,6 +73,10 @@ public class AlbumTableViewSource: NSObject, UITableViewDataSource, UITableViewD
         
         tableView.beginUpdates()
         tableView.endUpdates()
+        
+        if let delegate = self.albumTableDelegate {
+            delegate.albumSelected(albums[indexPath.row])
+        }
     }
     
     public func updateCellImage(tableView: UITableView, indexPath: NSIndexPath, image: Image) {

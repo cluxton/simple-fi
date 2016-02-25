@@ -45,6 +45,7 @@ public class SpotifyTrack: EVObjectOptional {
     var images : [SpotifyImage] = []
     var durationMs : Int = 0
     var album : SpotifyAlbum?
+    var artists: [SpotifyArtist] = []
 }
 
 public class SpotifyArtistList: EVObjectOptional {
@@ -67,6 +68,12 @@ public class SpotifySearchRepsonse: EVObjectOptional {
 
 public class SpotifyTracksResponse: EVObjectOptional {
     var tracks: [SpotifyTrack] = []
+}
+
+public class SpotifyAlbumResponse: EVObjectOptional {
+    var releaseDate: String = ""
+    var images : [SpotifyImage] = []
+    var tracks: SpotifyTrackList = SpotifyTrackList()
 }
 
 public class SpotifyAlbumsResponse: EVObjectOptional {
@@ -126,6 +133,34 @@ public class SpotifyApi {
         } catch {
             callback(nil, nil)
         }
+    }
+    
+    static func albumTracks(album: String, callback: (SpotifyAlbumResponse?, NSError?) -> Void) {
+        let at = SPTAuth.defaultInstance().session.accessToken
+        do {
+            let request = try SPTAlbum.createRequestForAlbum(NSURL(string: album), withAccessToken: at, market: "AU")
+            SPTRequest.sharedHandler().performRequest(request) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
+                let searchResponse = SpotifyAlbumResponse(json: String(data: data, encoding: NSUTF8StringEncoding));
+                callback(searchResponse, nil)
+            }
+        } catch {
+            callback(nil, nil)
+        }
         
+    }
+    
+    static func track(uri: String, callback: (SpotifyTrack?, NSError?) -> Void) {
+        let at = SPTAuth.defaultInstance().session.accessToken
+        
+        do {
+            let request = try SPTTrack.createRequestForTrack(NSURL(string: uri), withAccessToken: at, market: "AU")
+            
+            SPTRequest.sharedHandler().performRequest(request) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
+                let searchResponse = SpotifyTrack(json: String(data: data, encoding: NSUTF8StringEncoding));
+                callback(searchResponse, nil)
+            }
+        } catch {
+            callback(nil, nil)
+        }
     }
 }

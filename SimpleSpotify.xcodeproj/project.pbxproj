@@ -20,6 +20,8 @@
 		56B4519E1C7D3A44008130E4 /* AlbumTableViewSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B4519D1C7D3A44008130E4 /* AlbumTableViewSource.swift */; };
 		56B451A11C7D3AE4008130E4 /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B4519F1C7D3AE4008130E4 /* AlbumTableViewCell.swift */; };
 		56B451A21C7D3AE4008130E4 /* AlbumTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56B451A01C7D3AE4008130E4 /* AlbumTableViewCell.xib */; };
+		56B451A41C7D6ED7008130E4 /* PlayQueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B451A31C7D6ED7008130E4 /* PlayQueueManager.swift */; };
+		56B451A61C7D80E9008130E4 /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B451A51C7D80E9008130E4 /* NowPlayingViewController.swift */; };
 		56FADA0A1C7ACFAA00C5038B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA091C7ACFAA00C5038B /* AppDelegate.swift */; };
 		56FADA0C1C7ACFAA00C5038B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA0B1C7ACFAA00C5038B /* ViewController.swift */; };
 		56FADA0F1C7ACFAA00C5038B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56FADA0D1C7ACFAA00C5038B /* Main.storyboard */; };
@@ -66,6 +68,8 @@
 		56B4519D1C7D3A44008130E4 /* AlbumTableViewSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewSource.swift; sourceTree = "<group>"; };
 		56B4519F1C7D3AE4008130E4 /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
 		56B451A01C7D3AE4008130E4 /* AlbumTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumTableViewCell.xib; sourceTree = "<group>"; };
+		56B451A31C7D6ED7008130E4 /* PlayQueueManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayQueueManager.swift; sourceTree = "<group>"; };
+		56B451A51C7D80E9008130E4 /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayingViewController.swift; sourceTree = "<group>"; };
 		56D0D9AA1C7BEA240061CE4D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		56FADA061C7ACFAA00C5038B /* SimpleSpotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleSpotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56FADA091C7ACFAA00C5038B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -163,8 +167,10 @@
 				56FADA181C7ACFAA00C5038B /* Info.plist */,
 				56FADA101C7ACFAA00C5038B /* SimpleSpotify.xcdatamodeld */,
 				56FADA421C7AD38400C5038B /* SimpleSpotify-Bridging-Header.h */,
+				56B451A51C7D80E9008130E4 /* NowPlayingViewController.swift */,
 				56FADA481C7B040F00C5038B /* HomeViewController.swift */,
 				56B4518B1C7BFF8B008130E4 /* SpotifyApi.swift */,
+				56B451A31C7D6ED7008130E4 /* PlayQueueManager.swift */,
 				56B4518D1C7C64D5008130E4 /* ArtistViewController.swift */,
 				56B4518F1C7C6518008130E4 /* AlbumViewController.swift */,
 				56B451911C7C681F008130E4 /* SongTableViewSource.swift */,
@@ -393,8 +399,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				56FADA121C7ACFAA00C5038B /* SimpleSpotify.xcdatamodeld in Sources */,
+				56B451A61C7D80E9008130E4 /* NowPlayingViewController.swift in Sources */,
 				56FADA0C1C7ACFAA00C5038B /* ViewController.swift in Sources */,
 				56B451971C7C6A8F008130E4 /* SongTableViewCell.swift in Sources */,
+				56B451A41C7D6ED7008130E4 /* PlayQueueManager.swift in Sources */,
 				56FADA0A1C7ACFAA00C5038B /* AppDelegate.swift in Sources */,
 				56FADA491C7B040F00C5038B /* HomeViewController.swift in Sources */,
 				56B4518C1C7BFF8B008130E4 /* SpotifyApi.swift in Sources */,

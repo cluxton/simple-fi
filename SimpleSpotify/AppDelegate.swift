@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let kTokenSwapURL = "https://radiant-headland-43693.herokuapp.com/swap"
     let kTokenRefreshURL = "https://radiant-headland-43693.herokuapp.com/refresh"
     let kSessionUserDefaultsKey = "SpotifySession"
+    
+    internal var playQueue: PlayQueueManager?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -30,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //auth.tokenSwapURL = NSURL(string: kTokenSwapURL)
         //auth.tokenRefreshURL = NSURL(string: kTokenRefreshURL)
         auth.sessionUserDefaultsKey = kSessionUserDefaultsKey
+        
+        playQueue = PlayQueueManager()
         
         print("TEST!")
         return true
@@ -43,8 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
             auth.session = session
-            
-            NSNotificationCenter.defaultCenter().postNotificationName("SPTSessionUpdated", object: self)
+            print("POSTING SPTSessionUpdated")
+            NSNotificationCenter.defaultCenter().postNotificationName("SPTSessionUpdated", object: nil)
         }
         
         if (auth.canHandleURL(url)) {

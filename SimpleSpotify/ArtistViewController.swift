@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 
-class ArtistViewController: UIViewController {
+public class ArtistViewController: UIViewController, AlbumTableDelegate {
 
     let imageDownloader = ImageDownloader(
         configuration: ImageDownloader.defaultURLSessionConfiguration(),
@@ -22,6 +22,7 @@ class ArtistViewController: UIViewController {
     let albumTableSource: AlbumTableViewSource = AlbumTableViewSource()
     
     var artist: SpotifyArtist?
+    var selectedAlbum: SpotifyAlbum?
 
     
     @IBOutlet weak var trackTableView: UITableView!
@@ -29,10 +30,7 @@ class ArtistViewController: UIViewController {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var name: UILabel!
     
-    
-    
-    
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         image.layer.cornerRadius = image.frame.size.width / 2
@@ -41,6 +39,7 @@ class ArtistViewController: UIViewController {
         image.layer.borderColor = UIColor.blackColor().CGColor
         
         albumTableSource.imageDownloader = self.imageDownloader
+        albumTableSource.albumTableDelegate = self
         
         trackTableView.registerNib(UINib(nibName:"SongTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
         trackTableView.separatorStyle = .None
@@ -60,15 +59,29 @@ class ArtistViewController: UIViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override public func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         updateTopTracks()
         updateAlbums()
         downloadArtistImage()
+    }
+    
+    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showArtistAlbum") {
+            let vc = segue.destinationViewController as? AlbumViewController
+            if (selectedAlbum != nil) {
+                vc?.album = selectedAlbum
+            }
+        }
+    }
+    
+    public func albumSelected(album: SpotifyAlbum) {
+        selectedAlbum = album
+        performSegueWithIdentifier("showArtistAlbum", sender: self)
     }
     
 

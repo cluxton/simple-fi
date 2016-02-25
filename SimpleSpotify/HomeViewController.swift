@@ -22,9 +22,10 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     let TrackSection = 2
     
     let spotifyAuthenticator = SPTAuth.defaultInstance()
-    var player: SPTAudioStreamingController?
+    //var player: SPTAudioStreamingController?
     var searchResponse: SpotifySearchRepsonse?
     var selectedArtist: SpotifyArtist?
+    var playQueue: PlayQueueManager?
     
     @IBOutlet weak var searchFieldWrapper: UIView!
     @IBOutlet weak var searchField: UITextField!
@@ -43,8 +44,10 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     
         searchField.keyboardAppearance = UIKeyboardAppearance.Dark
         
-        setupSpotifyPlayer()
-                
+        //setupSpotifyPlayer()
+        self.searchField!.autocorrectionType = .No
+        self.searchField!.keyboardType = .WebSearch
+        
         let searchTextUpdated = self.searchField.rx_text
             .debounce(0.5, scheduler: MainScheduler.instance)
             .filter { s -> Bool in s.characters.count > 0 }
@@ -81,6 +84,10 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
                     }
                 }
             }
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        playQueue = appDelegate.playQueue!
+        
+        playQueue?.login()
         
             // Do any additional setup after loading the view.
     }
@@ -92,12 +99,12 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     
     override func viewDidAppear(animated: Bool) {
         print("VIEW DID APPEAR")
-        player!.loginWithSession(spotifyAuthenticator.session, callback: { (error: NSError!) in
-            if error != nil {
-                print("Couldn't login with session: \(error)")
-                return
-            }
-        })
+//        player!.loginWithSession(spotifyAuthenticator.session, callback: { (error: NSError!) in
+//            if error != nil {
+//                print("Couldn't login with session: \(error)")
+//                return
+//            }
+//        })
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -109,19 +116,36 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
         }
     }
     
+    @IBAction func play(sender: AnyObject) {
+        
+        playQueue?.play()
+    }
+    @IBAction func pause(sender: AnyObject) {
+        playQueue?.pause()
+    }
+    @IBAction func next(sender: AnyObject) {
+        playQueue?.skip()
+    }
+    
+    @IBAction func showStatus(sender: AnyObject) {
+        performSegueWithIdentifier("showPlaying", sender: self)
+    }
+    
+    
     private
     
-    func setupSpotifyPlayer() {
-        player = SPTAudioStreamingController(clientId: spotifyAuthenticator.clientID)
-        player!.playbackDelegate = self
-        player!.diskCache = SPTDiskCache(capacity: 1024 * 1024 * 64)
-    }
-    
-    func playTrack(session: SPTSession, track: String) {
-        
-        self.player!.playURIs([NSURL(string: track)!], withOptions: nil, callback: nil)
-        
-    }
+//    func setupSpotifyPlayer() {
+//        player = SPTAudioStreamingController(clientId: spotifyAuthenticator.clientID)
+//        player!.playbackDelegate = self
+//        player!.diskCache = SPTDiskCache(capacity: 1024 * 1024 * 64)
+//    }
+//    
+//    func playTrack(session: SPTSession, track: String) {
+//        print("PLAY")
+//        print(track)
+//        self.player!.playURIs([NSURL(string: track)!], withOptions: nil, callback: nil)
+//        
+//    }
     
     //Table view methods
     
@@ -189,7 +213,10 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.section == TrackSection) {
-            playTrack(spotifyAuthenticator.session, track: searchResponse!.tracks.items[indexPath.row].id)
+            
+            playQueue?.queueSong(searchResponse!.tracks.items[indexPath.row])
+            
+//            playTrack(spotifyAuthenticator.session, track: searchResponse!.tracks.items[indexPath.row].uri)
         } else if (indexPath.section == ArtistSection) {
             selectedArtist = searchResponse!.artists.items[indexPath.row]
             performSegueWithIdentifier("showArtist", sender: self)
