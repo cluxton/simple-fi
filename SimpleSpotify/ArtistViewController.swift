@@ -57,6 +57,10 @@ public class ArtistViewController: UIViewController, AlbumTableDelegate {
         if let navigationController = self.navigationController {
             navigationController.title = artist?.name
         }
+        
+        updateTopTracks()
+        updateAlbums()
+        downloadArtistImage()
     }
 
     override public func didReceiveMemoryWarning() {
@@ -65,9 +69,6 @@ public class ArtistViewController: UIViewController, AlbumTableDelegate {
     
     override public func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        updateTopTracks()
-        updateAlbums()
-        downloadArtistImage()
     }
     
     override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

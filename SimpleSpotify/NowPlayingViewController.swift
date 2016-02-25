@@ -32,7 +32,7 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
     @IBOutlet weak var timeTotal: UILabel!
     
     @IBOutlet weak var progressBar: UIProgressView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView?
     
     var tableSource: SongTableViewSource = SongTableViewSource()
     
@@ -42,10 +42,13 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.registerNib(UINib(nibName:"SongTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
-        tableView.delegate = tableSource
-        tableView.dataSource = tableSource
-        tableView.separatorStyle = .None
+        if let tv = tableView {
+            tv.registerNib(UINib(nibName:"SongTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
+            tv.delegate = tableSource
+            tv.dataSource = tableSource
+            tv.separatorStyle = .None
+        }
+        
         
         Observable<Int>
             .interval(0.2, scheduler: MainScheduler.instance)
@@ -56,11 +59,6 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         playQueue = appDelegate.playQueue
-        
-        
-        
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleTrackChange", name: "TrackChange", object: nil)
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "handlePlaybackChange", name: "PlaybackChange", object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -92,15 +90,21 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func showFull(sender: AnyObject) {
+        performSegueWithIdentifier("showNowPlaying", sender: self)
+    }
+    
     //PlaybackStateListener methods
     
     func trackUpdated(uri: String) {
         currentUri = uri
         getTrack(uri)
         
-        tableSource.setData(playQueue!.getQueue())
-        //tableView.reloadData()
-        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Top)
+        
+        if let tv = tableView {
+            tableSource.setData(playQueue!.getQueue())
+            tv.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Top)
+        }
     }
     
     
@@ -138,7 +142,9 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
                 
                 self.trackArtist?.text = artistLabel
                 
-                self.downloadTrackImage(t)
+                if (self.trackImage != nil) {
+                    self.downloadTrackImage(t)
+                }
             }
             
         }

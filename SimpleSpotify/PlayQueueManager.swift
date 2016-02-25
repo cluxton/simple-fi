@@ -155,14 +155,22 @@ public class PlayQueueManager: NSObject, SPTAudioStreamingPlaybackDelegate {
     
     public func addListener(listener: PlaybackStateListener) {
         listeners.append(listener)
+        print("ADD LISTENER")
+        
         listener.playbackStateUpdated(player!.isPlaying)
         if let track = currentTrack {
+            print("    UPDATE TRACK")
             listener.trackUpdated(track.uri)
         }
+        print("    \(listeners.count)")
+        
     }
     
     public func removeListener(listener: PlaybackStateListener) {
         listeners = listeners.filter({ $0 !== listener })
+        print("REMOVE LISTENER")
+        print("    \(listeners.count)")
+
     }
     
     private

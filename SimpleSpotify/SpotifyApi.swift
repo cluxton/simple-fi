@@ -103,6 +103,25 @@ public class SpotifyApi {
         }
     }
     
+    static func searchAll(query: String, callback: (SpotifySearchRepsonse?, NSError?) -> Void) {
+        let at = SPTAuth.defaultInstance().session.accessToken
+
+        let queryEscaped = query.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+        print("query: \(queryEscaped)")
+        
+        let url = NSURL(string: "https://api.spotify.com/v1/search?q=\(queryEscaped!)&type=track,artist,album&limit=6")
+        print("URL: \(url?.absoluteString)")
+            
+        let req = NSMutableURLRequest(URL: url!)
+        req.setValue("Bearer \(at)", forHTTPHeaderField: "Authorization")
+        req.setValue("application/json", forHTTPHeaderField: "Accept")
+        
+        SPTRequest.sharedHandler().performRequest(req) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
+            let searchResponse = SpotifySearchRepsonse(json: String(data: data, encoding: NSUTF8StringEncoding));
+            callback(searchResponse, nil)
+        }
+    }
+    
     static func topTracks(artist: String, callback: (SpotifyTracksResponse?, NSError?) -> Void) {
         let at = SPTAuth.defaultInstance().session.accessToken
         

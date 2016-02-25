@@ -15,6 +15,8 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     
     let spotifyAuthenticator = SPTAuth.defaultInstance()
     
+    var firstLoad: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleSpotifySessionUpdated", name: "SPTSessionUpdated", object: nil)
@@ -25,6 +27,15 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if (firstLoad) {
+            loginWithSpotify(self)
+        }
+        firstLoad = false
     }
     
     @IBAction func loginWithSpotify(sender: AnyObject) {

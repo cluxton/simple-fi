@@ -29,8 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         auth.clientID = kClientID
         auth.requestedScopes = [SPTAuthStreamingScope]
         auth.redirectURL = NSURL(string: kCallbackURL)
-        //auth.tokenSwapURL = NSURL(string: kTokenSwapURL)
-        //auth.tokenRefreshURL = NSURL(string: kTokenRefreshURL)
+        auth.tokenSwapURL = NSURL(string: kTokenSwapURL)
+        auth.tokenRefreshURL = NSURL(string: kTokenRefreshURL)
         auth.sessionUserDefaultsKey = kSessionUserDefaultsKey
         
         playQueue = PlayQueueManager()

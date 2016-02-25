@@ -22,7 +22,6 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     let TrackSection = 2
     
     let spotifyAuthenticator = SPTAuth.defaultInstance()
-    //var player: SPTAudioStreamingController?
     var searchResponse: SpotifySearchRepsonse?
     var selectedArtist: SpotifyArtist?
     var playQueue: PlayQueueManager?
@@ -43,39 +42,38 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
         self.tableView.reloadData()
     
         searchField.keyboardAppearance = UIKeyboardAppearance.Dark
+        searchFieldWrapper.layer.cornerRadius = 6.0
         
-        //setupSpotifyPlayer()
         self.searchField!.autocorrectionType = .No
         self.searchField!.keyboardType = .WebSearch
         
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        self.title = "Search"
+        
         let searchTextUpdated = self.searchField.rx_text
-            .debounce(0.5, scheduler: MainScheduler.instance)
+            .debounce(1, scheduler: MainScheduler.instance)
             .filter { s -> Bool in s.characters.count > 0 }
             .shareReplay(1)
         
-        let searchTypeUpdated = self.searchTypeRadio.rx_value
-            .map {v -> SPTSearchQueryType in
-                switch v {
-                case 0:
-                    return SPTSearchQueryType.QueryTypeArtist
-                case 1:
-                    return SPTSearchQueryType.QueryTypeAlbum
-                case 2:
-                    return SPTSearchQueryType.QueryTypeTrack
-                default:
-                    return SPTSearchQueryType.QueryTypeArtist
-                }
-            }
-            .shareReplay(1)
+//        let searchTypeUpdated = self.searchTypeRadio.rx_value
+//            .map {v -> SPTSearchQueryType in
+//                switch v {
+//                case 0:
+//                    return SPTSearchQueryType.QueryTypeArtist
+//                case 1:
+//                    return SPTSearchQueryType.QueryTypeAlbum
+//                case 2:
+//                    return SPTSearchQueryType.QueryTypeTrack
+//                default:
+//                    return SPTSearchQueryType.QueryTypeArtist
+//                }
+//            }
+//            .shareReplay(1)
         
-        Observable
-            .combineLatest(searchTextUpdated, searchTypeUpdated) { query, type -> SearchParameters in
-                return SearchParameters(query: "*" + query + "*", searchType: type)
-            }
-            .debounce(0.5, scheduler: MainScheduler.instance)
-            .subscribeNext { parameters in
+        searchTextUpdated
+            .subscribeNext { query in
                 print("Searching")
-                SpotifyApi.search(parameters.query, type: parameters.searchType) { (response: SpotifySearchRepsonse?, error: NSError?) in
+                SpotifyApi.searchAll(query) { (response: SpotifySearchRepsonse?, error: NSError?) in
                     if (response != nil) {
                         self.searchResponse = response
                         self.tableView.reloadData()
@@ -83,28 +81,21 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
                         print("ERROR SEARCHING")
                     }
                 }
-            }
+        }
+        
+        
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         playQueue = appDelegate.playQueue!
         
         playQueue?.login()
-        
-            // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-                // Dispose of any resources that can be recreated.
     }
     
     override func viewDidAppear(animated: Bool) {
         print("VIEW DID APPEAR")
-//        player!.loginWithSession(spotifyAuthenticator.session, callback: { (error: NSError!) in
-//            if error != nil {
-//                print("Couldn't login with session: \(error)")
-//                return
-//            }
-//        })
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -116,37 +107,8 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
         }
     }
     
-    @IBAction func play(sender: AnyObject) {
-        
-        playQueue?.play()
-    }
-    @IBAction func pause(sender: AnyObject) {
-        playQueue?.pause()
-    }
-    @IBAction func next(sender: AnyObject) {
-        playQueue?.skip()
-    }
-    
-    @IBAction func showStatus(sender: AnyObject) {
-        performSegueWithIdentifier("showPlaying", sender: self)
-    }
-    
-    
     private
-    
-//    func setupSpotifyPlayer() {
-//        player = SPTAudioStreamingController(clientId: spotifyAuthenticator.clientID)
-//        player!.playbackDelegate = self
-//        player!.diskCache = SPTDiskCache(capacity: 1024 * 1024 * 64)
-//    }
-//    
-//    func playTrack(session: SPTSession, track: String) {
-//        print("PLAY")
-//        print(track)
-//        self.player!.playURIs([NSURL(string: track)!], withOptions: nil, callback: nil)
-//        
-//    }
-    
+
     //Table view methods
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -216,7 +178,6 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
             
             playQueue?.queueSong(searchResponse!.tracks.items[indexPath.row])
             
-//            playTrack(spotifyAuthenticator.session, track: searchResponse!.tracks.items[indexPath.row].uri)
         } else if (indexPath.section == ArtistSection) {
             selectedArtist = searchResponse!.artists.items[indexPath.row]
             performSegueWithIdentifier("showArtist", sender: self)
@@ -224,6 +185,9 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         searchField.resignFirstResponder();
     }
 
