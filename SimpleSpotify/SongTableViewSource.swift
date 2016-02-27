@@ -22,17 +22,9 @@ public class SongTableViewSource: NSObject, UITableViewDataSource, UITableViewDe
         selectedTrackIndex = nil
     }
     
-//    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 44;
-//    }
-    
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tracks.count;
     }
-    
-//    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return "Title"
-//    }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if (indexPath == selectedTrackIndex) {
@@ -63,8 +55,15 @@ public class SongTableViewSource: NSObject, UITableViewDataSource, UITableViewDe
             selectedTrackIndex = indexPath
         }
         
+        dispatch_async(dispatch_get_main_queue()) {
+            tableView.scrollRectToVisible(tableView.rectForRowAtIndexPath(indexPath), animated: true)
+        }
+        
         tableView.beginUpdates()
         tableView.endUpdates()
+        
+        
+        
     }
     
     public func playSong(track: SpotifyTrack) {

@@ -79,8 +79,12 @@ public class AlbumViewController: UIViewController {
     
     func fetchAlbum() {
         SpotifyApi.albumTracks((self.album?.uri)!) { (response: SpotifyAlbumResponse?, error: NSError?) in
-            if (response != nil) {
-                self.tableSource.setData((response?.tracks.items)!)
+            if let tracks = response?.tracks.items {
+                tracks.forEach { track in
+                    track.album = self.album
+                }
+                
+                self.tableSource.setData(tracks)
                 self.tableView.reloadData()
             }
         }
@@ -91,7 +95,6 @@ public class AlbumViewController: UIViewController {
             let request = NSURLRequest(URL: NSURL(string: album!.images[1].url)!)
             
             imageDownloader.downloadImage(URLRequest: request) { response in
-                response.result.value
                 
                 if let value = response.result.value {
                     if let albumImg = self.albumArt {

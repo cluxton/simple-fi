@@ -9,19 +9,28 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import AlamofireImage
 
 struct SearchParameters {
     var query: String = ""
     var searchType: SPTSearchQueryType = SPTSearchQueryType.QueryTypeArtist
 }
 
-class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class HomeViewController: UIViewController, SearchTableSourceDelegate {
+    
+    let imageDownloader = ImageDownloader(
+        configuration: ImageDownloader.defaultURLSessionConfiguration(),
+        downloadPrioritization: .LIFO,
+        maximumActiveDownloads: 4,
+        imageCache: AutoPurgingImageCache()
+    )
     
     let ArtistSection = 0
     let AlbumSection = 1
     let TrackSection = 2
     
     let spotifyAuthenticator = SPTAuth.defaultInstance()
+    let tableSource: SearchTableViewSource = SearchTableViewSource()
     var searchResponse: SpotifySearchRepsonse?
     var selectedArtist: SpotifyArtist?
     var selectedAlbum: SpotifyAlbum?
@@ -32,17 +41,28 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     @IBOutlet weak var searchFieldWrapper: UIView!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var searchTypeRadio: UISegmentedControl!
-    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        playQueue = appDelegate.playQueue!
+        
+        tableSource.playQueue = self.playQueue
+        tableSource.imageDownloader = self.imageDownloader
+        tableSource.delegate = self
+        
+        self.tableView.registerNib(UINib(nibName:"SearchHeaderCell", bundle: nil), forCellReuseIdentifier: "searchHeaderCell")
+        self.tableView.registerNib(UINib(nibName:"SongTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
+        self.tableView.registerNib(UINib(nibName:"AlbumTableViewCellSmall", bundle: nil), forCellReuseIdentifier: "albumCell")
+        self.tableView.registerNib(UINib(nibName:"ArtistTableViewCell", bundle: nil), forCellReuseIdentifier: "artistCell")
+
+        self.tableView.delegate = tableSource
+        self.tableView.dataSource = tableSource
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.reloadData()
+        
     
         searchField.keyboardAppearance = UIKeyboardAppearance.Dark
         searchFieldWrapper.layer.cornerRadius = 6.0
@@ -58,37 +78,22 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
             .filter { s -> Bool in s.characters.count > 0 }
             .shareReplay(1)
         
-//        let searchTypeUpdated = self.searchTypeRadio.rx_value
-//            .map {v -> SPTSearchQueryType in
-//                switch v {
-//                case 0:
-//                    return SPTSearchQueryType.QueryTypeArtist
-//                case 1:
-//                    return SPTSearchQueryType.QueryTypeAlbum
-//                case 2:
-//                    return SPTSearchQueryType.QueryTypeTrack
-//                default:
-//                    return SPTSearchQueryType.QueryTypeArtist
-//                }
-//            }
-//            .shareReplay(1)
-        
         searchTextUpdated
             .subscribeNext { query in
                 print("Searching")
                 SpotifyApi.searchAll(query) { (response: SpotifySearchRepsonse?, error: NSError?) in
-                    if (response != nil) {
-                        self.searchResponse = response
+                    if let results = response {
+                        self.tableSource.setData(
+                            results.tracks.items,
+                            artists: results.artists.items,
+                            albums: results.albums.items)
                         self.tableView.reloadData()
-                    } else {
-                        print("ERROR SEARCHING")
                     }
                 }
         }
         
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        playQueue = appDelegate.playQueue!
+        
         
         playQueue?.login()
     }
@@ -99,7 +104,7 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
     
     override func viewDidAppear(animated: Bool) {
         print("VIEW DID APPEAR")
-        if (searchResponse == nil) {
+        if (searchField.text == "") {
             searchField.becomeFirstResponder()
         }
     }
@@ -114,92 +119,20 @@ class HomeViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, U
         }
     }
     
-    private
-
-    //Table view methods
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch(section) {
-        case ArtistSection:
-            return (searchResponse!.artists.items.count > 0 ? 44 : 0)
-        case AlbumSection:
-            return (searchResponse!.albums.items.count > 0 ? 44 : 0)
-        case TrackSection:
-            return (searchResponse!.tracks.items.count > 0 ? 44 : 0)
-        default:
-            return 0
-        }
+    func albumSelected(album: SpotifyAlbum) {
+        print("SHOW ALBUM")
+        selectedAlbum = album
+        performSegueWithIdentifier("showAlbum", sender: self)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if (searchResponse == nil) {
-            return 0
-        }
-        
-        return 3
+    func artistSelected(artist: SpotifyArtist) {
+        print("SHOW ARTIST")
+        selectedArtist = artist
+        performSegueWithIdentifier("showArtist", sender: self)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == ArtistSection) {
-            return searchResponse!.artists.items.count
-        } else if (section == AlbumSection) {
-            return searchResponse!.albums.items.count
-        } else if (section == TrackSection) {
-            return searchResponse!.tracks.items.count
-        }
-        
-        return 0;
-    }
-    
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch(section) {
-        case ArtistSection:
-            return "Artists"
-        case AlbumSection:
-            return "Albums"
-        case TrackSection:
-            return "Tracks"
-        default:
-            return ""
-        }
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("cell")
-        if (cell == nil) {
-            cell = UITableViewCell();
-        }
-        if (indexPath.section == ArtistSection) {
-            cell!.textLabel?.text = searchResponse!.artists.items[indexPath.row].name
-        } else if (indexPath.section == AlbumSection) {
-            cell!.textLabel?.text = searchResponse!.albums.items[indexPath.row].name
-        } else if (indexPath.section == TrackSection) {
-            cell!.textLabel?.text = searchResponse!.tracks.items[indexPath.row].name
-        }
-        
-        return cell!
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if (indexPath.section == TrackSection) {
-            
-            playQueue?.queueSong(searchResponse!.tracks.items[indexPath.row])
-            
-        } else if (indexPath.section == ArtistSection) {
-            selectedArtist = searchResponse!.artists.items[indexPath.row]
-            performSegueWithIdentifier("showArtist", sender: self)
-        } else if (indexPath.section == AlbumSection) {
-            selectedAlbum = searchResponse!.albums.items[indexPath.row]
-            performSegueWithIdentifier("showAlbum", sender: self)
-
-        }
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-    }
-    
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        searchField.resignFirstResponder();
+    func didStartScrolling() {
+        searchField.resignFirstResponder()
     }
 
 }

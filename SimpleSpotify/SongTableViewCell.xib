@@ -12,11 +12,11 @@
             <rect key="frame" x="0.0" y="0.0" width="434" height="128"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="434" height="128"/>
+                <rect key="frame" x="0.0" y="0.0" width="434" height="127.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not The Same" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6G-na-PkH">
-                        <rect key="frame" x="16" y="8" width="288" height="20"/>
+                        <rect key="frame" x="8" y="8" width="296" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="Dz4-6Q-ytF"/>
                         </constraints>
@@ -25,7 +25,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bodyjar - How it Works" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v9p-tD-nDs">
-                        <rect key="frame" x="16" y="36" width="288" height="18"/>
+                        <rect key="frame" x="8" y="36" width="296" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="H0l-cY-H1x"/>
                         </constraints>
@@ -33,14 +33,13 @@
                         <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ye1-sM-NTE">
-                        <rect key="frame" x="149" y="72" width="120" height="46"/>
-                        <color key="backgroundColor" red="0.075194597239999994" green="0.23318156600000001" blue="0.56664574150000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ye1-sM-NTE">
+                        <rect key="frame" x="141" y="72" width="140" height="46"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="120" id="hP3-az-wOD"/>
+                            <constraint firstAttribute="width" constant="140" id="hP3-az-wOD"/>
                             <constraint firstAttribute="height" constant="46" id="oBP-6g-muf"/>
                         </constraints>
-                        <state key="normal" title="Add to queue">
+                        <state key="normal" title=" Add to queue" image="queueSmall">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -57,14 +56,13 @@
                         <color key="textColor" red="0.46666666670000001" green="1" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLw-A8-w8p">
-                        <rect key="frame" x="16" y="72" width="120" height="46"/>
-                        <color key="backgroundColor" red="0.075194597244262695" green="0.23318156599998474" blue="0.56664574146270752" alpha="1" colorSpace="calibratedRGB"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLw-A8-w8p">
+                        <rect key="frame" x="8" y="72" width="120" height="46"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="120" id="QRC-Bu-JKH"/>
                             <constraint firstAttribute="height" constant="46" id="T8c-uH-WGE"/>
                         </constraints>
-                        <state key="normal" title="Play now">
+                        <state key="normal" title="  Play now" image="playSmall">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -75,14 +73,14 @@
                 <color key="backgroundColor" red="0.03071090148" green="0.1099115799" blue="0.2215238531" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="Ye1-sM-NTE" firstAttribute="top" secondItem="bLw-A8-w8p" secondAttribute="top" id="5rf-Ro-Rxw"/>
-                    <constraint firstItem="v9p-tD-nDs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="9Xa-0A-kZw"/>
+                    <constraint firstItem="v9p-tD-nDs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="9Xa-0A-kZw"/>
                     <constraint firstItem="4ue-U5-nze" firstAttribute="leading" secondItem="k6G-na-PkH" secondAttribute="trailing" constant="8" id="DP5-Zc-Nd8"/>
                     <constraint firstItem="4ue-U5-nze" firstAttribute="leading" secondItem="v9p-tD-nDs" secondAttribute="trailing" constant="8" id="H0Q-dF-rXj"/>
-                    <constraint firstItem="k6G-na-PkH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="Jel-bi-mYd"/>
+                    <constraint firstItem="k6G-na-PkH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Jel-bi-mYd"/>
                     <constraint firstItem="Ye1-sM-NTE" firstAttribute="leading" secondItem="bLw-A8-w8p" secondAttribute="trailing" constant="13" id="KHP-37-Vra"/>
                     <constraint firstItem="bLw-A8-w8p" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="64" id="VUW-u4-0Hd"/>
                     <constraint firstItem="4ue-U5-nze" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="aLU-Rm-lad"/>
-                    <constraint firstItem="bLw-A8-w8p" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="bHE-xE-ihD"/>
+                    <constraint firstItem="bLw-A8-w8p" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="bHE-xE-ihD"/>
                     <constraint firstItem="k6G-na-PkH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="fm9-9u-PSw"/>
                     <constraint firstItem="4ue-U5-nze" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="15" id="skt-eI-XNC"/>
                     <constraint firstItem="v9p-tD-nDs" firstAttribute="top" secondItem="k6G-na-PkH" secondAttribute="bottom" constant="8" id="wg4-pZ-WGT"/>
@@ -98,4 +96,8 @@
             <point key="canvasLocation" x="613" y="470"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="playSmall" width="10" height="14"/>
+        <image name="queueSmall" width="14" height="16"/>
+    </resources>
 </document>

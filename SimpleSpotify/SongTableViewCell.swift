@@ -15,8 +15,8 @@ public protocol SongCellDelegate {
 
 public class SongTableViewCell: UITableViewCell {
     
-    static let DefaultHeight: Int = 66
-    static let OpenHeight: Int = 136
+    static let DefaultHeight: CGFloat = 66
+    static let OpenHeight: CGFloat = 136
 
     @IBOutlet public weak var queueButton: UIButton!
     @IBOutlet public weak var playButton: UIButton!
@@ -33,6 +33,14 @@ public class SongTableViewCell: UITableViewCell {
         
         self.clipsToBounds = true
         self.selectionStyle = UITableViewCellSelectionStyle.None
+        
+        let size = self.contentView.frame.size
+        let border = UIView(frame: CGRect(x: 10, y: size.height - 1, width: size.width - 10, height: 1))
+        border.backgroundColor = UIColor.whiteColor()
+        border.alpha = 0.1
+        border.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin];
+        
+        self.contentView.addSubview(border)
         
     }
 

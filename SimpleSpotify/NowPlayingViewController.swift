@@ -111,9 +111,10 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
     func playbackStateUpdated(isPlaying: Bool) {
         print("Handle Playback Change")
         
-        let text = isPlaying ? "Pause" : "Play"
-        playPause.setTitle(text, forState: .Normal)
-        playPause.setTitle(text, forState: .Highlighted)
+        let imgName = isPlaying ? "pause" : "play"
+        let img = UIImage(named: imgName)
+        playPause.setImage(img , forState: .Normal)
+        playPause.setImage(img, forState: .Highlighted)
     }
     
     func updateSeeker() {
