@@ -19,9 +19,9 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleSpotifySessionUpdated", name: "SPTSessionUpdated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "validSessionAquired", name: "SPTSessionUpdated", object: nil)
         //setupSpotifyPlayer()
-                // Do any additional setup after loading the view, typically from a nib.
+        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,35 +33,44 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
         super.viewDidAppear(animated)
         
         if (firstLoad) {
-            loginWithSpotify(self)
+            refreshSession()
         }
         firstLoad = false
     }
     
     @IBAction func loginWithSpotify(sender: AnyObject) {
-        if let session = spotifyAuthenticator.session {
-            print("EXISTING SESSION")
-            
-            if (session.isValid()) {
-                print("  Session is valid")
-                performSegueWithIdentifier("showHome", sender: self)
-                return
-            }
-            
-            if (!session.isValid() && spotifyAuthenticator.hasTokenRefreshService) {
-                print("  renewing session")
-                spotifyAuthenticator.renewSession(session) { (error: NSError!, session: SPTSession!) in
-                    if error != nil {
-                        print("    Couldn't login with session: \(error)")
-                        return
-                    }
-                    print("    SESSION RENEWED")
-                    
-                }
-            }
+        refreshSession()
+    }
+    
+    func refreshSession() {
+        
+        guard let session = spotifyAuthenticator.session else {
+            self.reauthenticate()
+            return
         }
         
+        if (session.isValid()) {
+            self.validSessionAquired()
+            return
+        }
         
+        if (!session.isValid() && spotifyAuthenticator.hasTokenRefreshService) {
+            spotifyAuthenticator.renewSession(session) { (error: NSError!, session: SPTSession!) in
+                if error != nil {
+                    print("    Couldn't login with session: \(error)")
+                    self.reauthenticate()
+                    return
+                }
+                
+                self.validSessionAquired()
+            }
+            return
+        }
+        
+        self.reauthenticate()
+    }
+    
+    func reauthenticate() {
         spotifyAuthVC = SPTAuthViewController.authenticationViewController()
         spotifyAuthVC!.delegate = self
         spotifyAuthVC!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -69,29 +78,37 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
         spotifyAuthVC!.definesPresentationContext = true
         print("PRESENT")
         presentViewController(spotifyAuthVC!, animated: false, completion: nil)
-        
+    }
+    
+    func validSessionAquired() {
+        performSegueWithIdentifier("showHome", sender: self)
+    }
+    
+    func logonFailed() {
+        print("AUTHENTICATION FAILED")
     }
     
     // SPTAuthViewDelegate protocol methods
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
         print("AUTH VC DELEGATE SUCCESS");
-        spotifyAuthenticator.session = session;
-        NSNotificationCenter.defaultCenter().postNotificationName("SPTSessionUpdated", object: self)
+        self.validSessionAquired()
     }
     
     func authenticationViewControllerDidCancelLogin(authenticationViewController: SPTAuthViewController!) {
         print("login cancelled")
+        logonFailed()
     }
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!) {
         print("login failed: \(error)")
+        logonFailed()
     }
     
     func handleSpotifySessionUpdated() {
+        spotifyAuthVC?.dismissViewControllerAnimated(true, completion: nil)
         print("LOGON SUCCESS");
-        spotifyAuthVC!.dismissViewControllerAnimated(true, completion: nil)
-        performSegueWithIdentifier("showHome", sender: self)
+        validSessionAquired()
     }
 
 }
