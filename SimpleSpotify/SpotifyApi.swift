@@ -81,103 +81,66 @@ public class SpotifyAlbumsResponse: EVObjectOptional {
 }
 
 public class SpotifyApi {
-    static func performRequest(request: NSURLRequest, callback: (SpotifySearchRepsonse?, NSError?) -> Void) {
-        SPTRequest.sharedHandler().performRequest(request) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
-            let searchResponse = SpotifySearchRepsonse(json: String(data: data, encoding: NSUTF8StringEncoding));
-            callback(searchResponse, nil)
-        }
-    }
+    
     
     static func search(query: String, type: SPTSearchQueryType, callback: (SpotifySearchRepsonse?, NSError?) -> Void) {
-        let at = SPTAuth.defaultInstance().session.accessToken
-        
-        do {
-            let search = try SPTSearch.createRequestForSearchWithQuery(query, queryType: type, accessToken: at)
-            SPTRequest.sharedHandler().performRequest(search) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
-                let searchResponse = SpotifySearchRepsonse(json: String(data: data, encoding: NSUTF8StringEncoding));
-                callback(searchResponse, nil)
-            }
-            
-        } catch {
-            callback(nil, nil)
+        performRequest(callback) { accessToken in
+            return try SPTSearch.createRequestForSearchWithQuery(query, queryType: type, accessToken: accessToken)
         }
+        
     }
     
     static func searchAll(query: String, callback: (SpotifySearchRepsonse?, NSError?) -> Void) {
-        let at = SPTAuth.defaultInstance().session.accessToken
-
-        let queryEscaped = query.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
-        print("query: \(queryEscaped)")
-        
-        let url = NSURL(string: "https://api.spotify.com/v1/search?q=\(queryEscaped!)&type=track,artist,album&limit=6")
-        print("URL: \(url?.absoluteString)")
+        performRequest(callback) { accessToken in
+            let queryEscaped = query.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
             
-        let req = NSMutableURLRequest(URL: url!)
-        req.setValue("Bearer \(at)", forHTTPHeaderField: "Authorization")
-        req.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        SPTRequest.sharedHandler().performRequest(req) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
-            let searchResponse = SpotifySearchRepsonse(json: String(data: data, encoding: NSUTF8StringEncoding));
-            callback(searchResponse, nil)
+            let req = NSMutableURLRequest(
+                URL: NSURL(string: "https://api.spotify.com/v1/search?q=\(queryEscaped!)&type=track,artist,album&limit=6")!
+            )
+            req.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            req.setValue("application/json", forHTTPHeaderField: "Accept")
+            return req
         }
     }
     
     static func topTracks(artist: String, callback: (SpotifyTracksResponse?, NSError?) -> Void) {
-        let at = SPTAuth.defaultInstance().session.accessToken
-        
-        do {
-            let request = try SPTArtist.createRequestForTopTracksForArtist(NSURL(string: artist), withAccessToken: at, market: "AU")
-            SPTRequest.sharedHandler().performRequest(request) { (error: NSError!, response: NSURLResponse!, data: NSData!) in                
-//                let str = NSString(data: data, encoding: NSUTF8StringEncoding)
-//                print(str)
-                let searchResponse = SpotifyTracksResponse(json: String(data: data, encoding: NSUTF8StringEncoding));
-                callback(searchResponse, nil)
-            }
-            
-        } catch {
-            callback(nil, nil)
+        performRequest(callback) { accessToken in
+            return try SPTArtist.createRequestForTopTracksForArtist(NSURL(string: artist), withAccessToken: accessToken, market: "AU")
         }
     }
     
     static func albums(artist: String, albumType: SPTAlbumType, callback: (SpotifyAlbumsResponse?, NSError?) -> Void) {
-        let at = SPTAuth.defaultInstance().session.accessToken
-        do {
-            let request = try SPTArtist.createRequestForAlbumsByArtist(NSURL(string: artist), ofType: albumType, withAccessToken: at, market: "AU")
-            SPTRequest.sharedHandler().performRequest(request) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
-                let searchResponse = SpotifyAlbumsResponse(json: String(data: data, encoding: NSUTF8StringEncoding));
-                callback(searchResponse, nil)
-            }
-        } catch {
-            callback(nil, nil)
+        performRequest(callback) { accessToken in
+            return try SPTArtist.createRequestForAlbumsByArtist(NSURL(string: artist), ofType: albumType, withAccessToken: accessToken, market: "AU")
         }
     }
     
     static func albumTracks(album: String, callback: (SpotifyAlbumResponse?, NSError?) -> Void) {
-        let at = SPTAuth.defaultInstance().session.accessToken
-        do {
-            let request = try SPTAlbum.createRequestForAlbum(NSURL(string: album), withAccessToken: at, market: "AU")
-            SPTRequest.sharedHandler().performRequest(request) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
-                let searchResponse = SpotifyAlbumResponse(json: String(data: data, encoding: NSUTF8StringEncoding));
-                callback(searchResponse, nil)
-            }
-        } catch {
-            callback(nil, nil)
+        performRequest(callback) { accessToken in
+            return try SPTAlbum.createRequestForAlbum(NSURL(string: album), withAccessToken: accessToken, market: "AU")
         }
-        
     }
     
     static func track(uri: String, callback: (SpotifyTrack?, NSError?) -> Void) {
+        performRequest(callback) { accessToken in
+            return try SPTTrack.createRequestForTrack(NSURL(string: uri), withAccessToken: accessToken, market: "AU")
+        }
+    }
+    
+    private
+    
+    static func performRequest<ReturnType: EVObject>(callback: (ReturnType?, NSError?) -> Void, requestFactory: (accessToken: String) throws -> NSURLRequest) {
         let at = SPTAuth.defaultInstance().session.accessToken
-        
         do {
-            let request = try SPTTrack.createRequestForTrack(NSURL(string: uri), withAccessToken: at, market: "AU")
-            
+            let request = try requestFactory(accessToken: at)
             SPTRequest.sharedHandler().performRequest(request) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
-                let searchResponse = SpotifyTrack(json: String(data: data, encoding: NSUTF8StringEncoding));
+                let searchResponse = ReturnType(json: String(data: data, encoding: NSUTF8StringEncoding));
                 callback(searchResponse, nil)
             }
+            
         } catch {
             callback(nil, nil)
         }
     }
+
 }
