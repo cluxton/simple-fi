@@ -44,6 +44,7 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     
     func refreshSession() {
         
+        print("REFRESH SESSION")
         guard let session = spotifyAuthenticator.session else {
             self.reauthenticate()
             return
@@ -55,7 +56,10 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
         }
         
         if (!session.isValid() && spotifyAuthenticator.hasTokenRefreshService) {
+            print ("RENEWING")
+            
             spotifyAuthenticator.renewSession(session) { (error: NSError!, session: SPTSession!) in
+                print("CALLBACK")
                 if error != nil {
                     print("    Couldn't login with session: \(error)")
                     self.reauthenticate()
@@ -64,6 +68,7 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
                 
                 self.validSessionAquired()
             }
+            print("DONE")
             return
         }
         
@@ -81,7 +86,11 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     }
     
     func validSessionAquired() {
-        performSegueWithIdentifier("showHome", sender: self)
+        print ("VALIDATED!!!")
+        PlayQueueManager.defaultInstance().login()
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        //performSegueWithIdentifier("showHome", sender: self)
     }
     
     func logonFailed() {

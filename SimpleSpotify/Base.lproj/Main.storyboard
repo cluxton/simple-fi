@@ -15,11 +15,11 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTu-rS-RLR">
-                                <rect key="frame" x="217" y="731" width="167" height="38"/>
+                                <rect key="frame" x="217" y="531" width="167" height="38"/>
                                 <color key="backgroundColor" red="0.46666666666666667" green="1" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="Jia-bo-SFd"/>
@@ -42,13 +42,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="f4L-cq-s1u"/>
-                    <connections>
-                        <segue destination="AtS-2P-UW4" kind="show" identifier="showHome" id="7Ow-7z-7HL"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-238" y="2107"/>
+            <point key="canvasLocation" x="558" y="1167"/>
         </scene>
         <!--Now Playing View Controller-->
         <scene sceneID="fqt-pd-IPH">
@@ -292,6 +289,7 @@
                             <constraint firstItem="pUD-Gn-ZAG" firstAttribute="trailing" secondItem="ifo-bN-J47" secondAttribute="trailingMargin" id="x3x-bF-8UN"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Cdb-iL-fbJ"/>
                     <connections>
                         <outlet property="searchField" destination="k8m-NU-nhP" id="CWS-8t-K6z"/>
                         <outlet property="searchFieldWrapper" destination="pUD-Gn-ZAG" id="cPd-Ho-Gck"/>
@@ -333,7 +331,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="2015 - 13 tracks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5eq-bd-MWp">
-                                <rect key="frame" x="179" y="128.5" width="401" height="20.5"/>
+                                <rect key="frame" x="179" y="129" width="401" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="24" id="NcC-wQ-QOn"/>
                                 </constraints>
@@ -374,7 +372,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Bodyjar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0Y-C8-YQm">
-                                <rect key="frame" x="179" y="100" width="401" height="20.5"/>
+                                <rect key="frame" x="179" y="100" width="401" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="24" id="lAK-EU-acr"/>
                                 </constraints>
@@ -471,7 +469,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="The Red Hot Chilli Peppers" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Cd-v3-Idx">
-                                <rect key="frame" x="116" y="84" width="169" height="45.5"/>
+                                <rect key="frame" x="116" y="83" width="169" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="48" id="0z6-Cm-LDI"/>
                                 </constraints>
@@ -513,10 +511,10 @@
             </objects>
             <point key="canvasLocation" x="1289" y="2107"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Root Navigation View Controller-->
         <scene sceneID="b06-XR-t4C">
             <objects>
-                <navigationController id="OrM-qX-GMB" sceneMemberID="viewController">
+                <navigationController id="OrM-qX-GMB" customClass="RootNavigationViewController" customModule="SimpleSpotify" customModuleProvider="target" sceneMemberID="viewController">
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="800"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="yGL-4T-Qhb">
@@ -524,17 +522,18 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="0NQ-4j-9eD"/>
+                        <segue destination="AtS-2P-UW4" kind="relationship" relationship="rootViewController" id="8m0-ch-M9A"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="showAuthenticator" id="q36-JH-gDH"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j2G-cT-6kq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-238" y="1159"/>
+            <point key="canvasLocation" x="-270" y="1167"/>
         </scene>
-        <!--View Controller-->
+        <!--Root View Controller-->
         <scene sceneID="XpK-zf-Kpu">
             <objects>
-                <viewController id="w58-DP-3ue" sceneMemberID="viewController">
+                <viewController id="w58-DP-3ue" customClass="RootViewController" customModule="SimpleSpotify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ja5-Oc-1M6"/>
                         <viewControllerLayoutGuide type="bottom" id="Df1-HL-MO3"/>
@@ -546,7 +545,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s90-bO-2uc">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="480"/>
                                 <connections>
-                                    <segue destination="OrM-qX-GMB" kind="embed" id="h1X-fE-xj2"/>
+                                    <segue destination="OrM-qX-GMB" kind="embed" id="3Dc-jc-2AA"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kl8-Ny-ISJ">
@@ -587,6 +586,10 @@
         <scene sceneID="ekJ-9M-iRo">
             <objects>
                 <viewController id="we4-Iu-b4P" customClass="NowPlayingViewController" customModule="SimpleSpotify" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DBh-4u-XFG"/>
+                        <viewControllerLayoutGuide type="bottom" id="5jW-qP-OJX"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="zYO-4G-nUB">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -724,11 +727,12 @@
                         <outlet property="trackArtist" destination="AlK-bP-PRt" id="9lx-jp-sZ3"/>
                         <outlet property="trackTitle" destination="pSJ-tu-4Wc" id="YaX-fL-opF"/>
                         <segue destination="nuX-hN-88N" kind="presentation" identifier="showNowPlaying" id="VU2-e8-No0"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="showAuthenticator" id="Uwg-vV-7J7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DjE-9K-ayA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1035" y="1682"/>
+            <point key="canvasLocation" x="-757" y="1692"/>
         </scene>
     </scenes>
     <resources>
@@ -738,6 +742,7 @@
         <image name="showQueue" width="13" height="13"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Uwg-vV-7J7"/>
         <segue reference="7k3-ex-4cs"/>
     </inferredMetricsTieBreakers>
 </document>

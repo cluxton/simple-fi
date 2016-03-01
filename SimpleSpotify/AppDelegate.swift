@@ -33,7 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         auth.tokenRefreshURL = NSURL(string: kTokenRefreshURL)
         auth.sessionUserDefaultsKey = kSessionUserDefaultsKey
         
-        playQueue = PlayQueueManager()
+        playQueue = PlayQueueManager.defaultInstance()
+        //playQueue = PlayQueueManager()
+
         
         print("TEST!")
         return true
