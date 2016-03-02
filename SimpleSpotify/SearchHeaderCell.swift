@@ -14,7 +14,7 @@ class SearchHeaderCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.backgroundColor = UIColor(hue: 0.597, saturation: 0.86, brightness: 0.22, alpha: 1.0)
+        self.backgroundColor = UIColor(red: 0.016, green: 0.055, blue: 0.11, alpha: 1)
         self.clipsToBounds = true
         
         let size = self.contentView.frame.size

@@ -18,16 +18,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTu-rS-RLR">
-                                <rect key="frame" x="217" y="531" width="167" height="38"/>
-                                <color key="backgroundColor" red="0.46666666666666667" green="1" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in to spotify" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ttw-bT-swN">
+                                <rect key="frame" x="136" y="198" width="328" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="38" id="Jia-bo-SFd"/>
-                                    <constraint firstAttribute="width" constant="167" id="tpZ-Od-BPO"/>
+                                    <constraint firstAttribute="width" constant="328" id="yKk-Cz-Hb0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="29"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Authenticating" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFo-EI-oXF">
+                                <rect key="frame" x="129" y="258" width="342" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="250" constant="20" id="MwU-aO-DkT"/>
+                                    <constraint firstAttribute="width" constant="342" id="v9h-0u-oOK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTu-rS-RLR">
+                                <rect key="frame" x="178" y="327" width="244" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="7dc-PU-bpC"/>
+                                    <constraint firstAttribute="width" constant="244" id="9mC-dg-wQD"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                                <state key="normal" title="Login to Spotify">
+                                <state key="normal" backgroundImage="spotify-login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -35,11 +53,21 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.030710901484035071" green="0.10991157990768596" blue="0.22152385305851063" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.016177140176296234" green="0.053786560893058777" blue="0.1107495129108429" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="kTu-rS-RLR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6Wr-yZ-Rv9"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="kTu-rS-RLR" secondAttribute="bottom" constant="31" id="QVn-ES-1rf"/>
+                            <constraint firstItem="Ttw-bT-swN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6aA-Oo-O6S"/>
+                            <constraint firstItem="kTu-rS-RLR" firstAttribute="top" secondItem="fFo-EI-oXF" secondAttribute="bottom" constant="44" id="F8H-cj-eQH"/>
+                            <constraint firstItem="fFo-EI-oXF" firstAttribute="centerX" secondItem="Ttw-bT-swN" secondAttribute="centerX" id="FOC-kN-mob"/>
+                            <constraint firstItem="kTu-rS-RLR" firstAttribute="centerX" secondItem="fFo-EI-oXF" secondAttribute="centerX" id="evI-i2-yYY"/>
+                            <constraint firstItem="fFo-EI-oXF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-30" id="j8k-uv-p7c"/>
+                            <constraint firstItem="fFo-EI-oXF" firstAttribute="top" secondItem="Ttw-bT-swN" secondAttribute="bottom" constant="26" id="qtI-an-aYm"/>
+                            <constraint firstItem="Ttw-bT-swN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="235" id="yye-7v-PFQ"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="yye-7v-PFQ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="f4L-cq-s1u"/>
                 </viewController>
@@ -213,7 +241,7 @@
                                 </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.03071090148" green="0.1099115799" blue="0.2215238531" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.015686274509803921" green="0.054901960784313725" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="GPr-2B-XgM" firstAttribute="top" secondItem="vv6-8G-8mN" secondAttribute="bottom" constant="20" id="75a-Fu-VIH"/>
                             <constraint firstItem="vv6-8G-8mN" firstAttribute="leading" secondItem="jsA-Ab-v7D" secondAttribute="leadingMargin" id="8Gs-On-Bbh"/>
@@ -278,7 +306,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.03071090148" green="0.1099115799" blue="0.2215238531" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.016177140180000001" green="0.053786560890000001" blue="0.1107495129" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="rEV-yN-OdX" firstAttribute="trailing" secondItem="ifo-bN-J47" secondAttribute="trailingMargin" id="Kiv-ME-JbB"/>
                             <constraint firstItem="ZtE-gT-yi0" firstAttribute="top" secondItem="rEV-yN-OdX" secondAttribute="bottom" id="TDp-L8-v1g"/>
@@ -381,7 +409,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.03071090148" green="0.1099115799" blue="0.2215238531" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.016177140180000001" green="0.053786560890000001" blue="0.1107495129" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="SE7-K8-bST" firstAttribute="bottom" secondItem="diP-FB-4LV" secondAttribute="bottom" id="2b3-bS-cV0"/>
                             <constraint firstItem="p0Y-C8-YQm" firstAttribute="trailing" secondItem="kPp-Pi-Vhj" secondAttribute="trailingMargin" id="654-1M-7cj"/>
@@ -478,7 +506,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.03071090148" green="0.1099115799" blue="0.2215238531" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.016177140180000001" green="0.053786560890000001" blue="0.1107495129" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="FDz-Mq-Bpg" firstAttribute="top" secondItem="lAV-EV-Ie5" secondAttribute="bottom" constant="11" id="0Bv-CI-47G"/>
                             <constraint firstItem="FDz-Mq-Bpg" firstAttribute="leading" secondItem="4Cd-v3-Idx" secondAttribute="trailing" constant="21" id="5Mn-Gx-bM6"/>
@@ -740,6 +768,7 @@
         <image name="next" width="17" height="23"/>
         <image name="play" width="62" height="62"/>
         <image name="showQueue" width="13" height="13"/>
+        <image name="spotify-login" width="244" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="q36-JH-gDH"/>

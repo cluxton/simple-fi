@@ -34,7 +34,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         auth.sessionUserDefaultsKey = kSessionUserDefaultsKey
         
         playQueue = PlayQueueManager.defaultInstance()
-                
+        
+        UINavigationBar.appearance().barStyle = UIBarStyle.Default
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().barTintColor = UIColor(red: 0.051, green: 0.278, blue: 0.631, alpha: 1)
+        UINavigationBar.appearance().translucent = false
+        
+        if let font = UIFont(name: "Helvetica Neue", size: 17) {
+            UINavigationBar.appearance().titleTextAttributes = [
+                NSFontAttributeName: font,
+                NSForegroundColorAttributeName: UIColor.whiteColor()
+            ]
+
+        }
+        
         return true
     }
     func application(app: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
