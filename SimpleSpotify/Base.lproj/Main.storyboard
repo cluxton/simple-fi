@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Auth View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SimpleSpotify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="AuthViewController" customModule="SimpleSpotify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -39,6 +39,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTu-rS-RLR">
                                 <rect key="frame" x="178" y="327" width="244" height="44"/>
+                                <accessibility key="accessibilityConfiguration" label="Log in with Spotify"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="7dc-PU-bpC"/>
                                     <constraint firstAttribute="width" constant="244" id="9mC-dg-wQD"/>
@@ -70,6 +71,11 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="f4L-cq-s1u"/>
+                    <connections>
+                        <outlet property="Header" destination="Ttw-bT-swN" id="Hme-8Q-p5t"/>
+                        <outlet property="LoginButton" destination="kTu-rS-RLR" id="RdY-OX-SGb"/>
+                        <outlet property="Subtitle" destination="fFo-EI-oXF" id="Pa6-y1-e8N"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -108,9 +114,9 @@
                                             <action selector="skip:" destination="nuX-hN-88N" eventType="touchUpInside" id="e5h-oA-PO5"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BMS-eH-Bqg">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-album" translatesAutoresizingMaskIntoConstraints="NO" id="BMS-eH-Bqg">
                                         <rect key="frame" x="0.0" y="60" width="160" height="160"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="160" id="bgK-9e-TkC"/>
                                             <constraint firstAttribute="width" constant="160" id="uFp-fy-5i4"/>
@@ -330,10 +336,10 @@
             </objects>
             <point key="canvasLocation" x="570" y="2107"/>
         </scene>
-        <!--Album View Controller-->
+        <!--View Album-->
         <scene sceneID="kFB-LJ-oU6">
             <objects>
-                <viewController id="DgO-TX-lOu" customClass="AlbumViewController" customModule="SimpleSpotify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="View Album" id="DgO-TX-lOu" customClass="AlbumViewController" customModule="SimpleSpotify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0b2-m6-aL6"/>
                         <viewControllerLayoutGuide type="bottom" id="NA5-fX-ikg"/>
@@ -342,7 +348,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bNd-yX-Ee7">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-album" translatesAutoresizingMaskIntoConstraints="NO" id="bNd-yX-Ee7">
                                 <rect key="frame" x="20" y="63" width="140" height="140"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="7Sx-PB-zSo"/>
@@ -480,7 +486,7 @@
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SMp-Vx-vq2">
                                 <rect key="frame" x="20" y="62" width="88" height="88"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="88" id="HbU-IK-jIa"/>
                                     <constraint firstAttribute="width" constant="88" id="Ykh-iA-wPa"/>
@@ -765,6 +771,7 @@
     </scenes>
     <resources>
         <image name="Browse" width="13" height="13"/>
+        <image name="default-album" width="120" height="120"/>
         <image name="next" width="17" height="23"/>
         <image name="play" width="62" height="62"/>
         <image name="showQueue" width="13" height="13"/>

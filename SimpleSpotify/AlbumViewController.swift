@@ -52,6 +52,9 @@ public class AlbumViewController: UIViewController {
         
         fetchAlbum()
         downloadAlbumImage()
+        
+        playButton!.layer.cornerRadius = 6
+        queueButton!.layer.cornerRadius = 6
     }
 
     override public func didReceiveMemoryWarning() {

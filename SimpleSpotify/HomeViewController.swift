@@ -87,6 +87,7 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
                             artists: results.artists.items,
                             albums: results.albums.items)
                         self?.tableView.reloadData()
+                        self?.tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
                     }
                 }
             }

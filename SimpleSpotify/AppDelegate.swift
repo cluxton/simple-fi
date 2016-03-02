@@ -58,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Couldn't login with session: \(error)")
                 return
             }
+            print("APP LOGON SUCCESS")
             auth.session = session
             NSNotificationCenter.defaultCenter().postNotificationName("SPTSessionUpdated", object: nil)
         }

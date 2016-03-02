@@ -31,7 +31,7 @@
 		56B451A41C7D6ED7008130E4 /* PlayQueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B451A31C7D6ED7008130E4 /* PlayQueueManager.swift */; };
 		56B451A61C7D80E9008130E4 /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B451A51C7D80E9008130E4 /* NowPlayingViewController.swift */; };
 		56FADA0A1C7ACFAA00C5038B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA091C7ACFAA00C5038B /* AppDelegate.swift */; };
-		56FADA0C1C7ACFAA00C5038B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA0B1C7ACFAA00C5038B /* ViewController.swift */; };
+		56FADA0C1C7ACFAA00C5038B /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA0B1C7ACFAA00C5038B /* AuthViewController.swift */; };
 		56FADA0F1C7ACFAA00C5038B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56FADA0D1C7ACFAA00C5038B /* Main.storyboard */; };
 		56FADA121C7ACFAA00C5038B /* SimpleSpotify.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 56FADA101C7ACFAA00C5038B /* SimpleSpotify.xcdatamodeld */; };
 		56FADA141C7ACFAA00C5038B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56FADA131C7ACFAA00C5038B /* Assets.xcassets */; };
@@ -89,7 +89,7 @@
 		56D0D9AA1C7BEA240061CE4D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		56FADA061C7ACFAA00C5038B /* SimpleSpotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleSpotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56FADA091C7ACFAA00C5038B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		56FADA0B1C7ACFAA00C5038B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		56FADA0B1C7ACFAA00C5038B /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		56FADA0E1C7ACFAA00C5038B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		56FADA111C7ACFAA00C5038B /* SimpleSpotify.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleSpotify.xcdatamodel; sourceTree = "<group>"; };
 		56FADA131C7ACFAA00C5038B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -176,7 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				56FADA091C7ACFAA00C5038B /* AppDelegate.swift */,
-				56FADA0B1C7ACFAA00C5038B /* ViewController.swift */,
+				56FADA0B1C7ACFAA00C5038B /* AuthViewController.swift */,
 				56FADA0D1C7ACFAA00C5038B /* Main.storyboard */,
 				56FADA131C7ACFAA00C5038B /* Assets.xcassets */,
 				56FADA151C7ACFAA00C5038B /* LaunchScreen.storyboard */,
@@ -435,7 +435,7 @@
 				563E0E4B1C816E6F003E22E3 /* RootViewController.swift in Sources */,
 				56B451A61C7D80E9008130E4 /* NowPlayingViewController.swift in Sources */,
 				563E0E4D1C816F9C003E22E3 /* RootNavigationViewController.swift in Sources */,
-				56FADA0C1C7ACFAA00C5038B /* ViewController.swift in Sources */,
+				56FADA0C1C7ACFAA00C5038B /* AuthViewController.swift in Sources */,
 				56B451971C7C6A8F008130E4 /* SongTableViewCell.swift in Sources */,
 				56B451A41C7D6ED7008130E4 /* PlayQueueManager.swift in Sources */,
 				56FADA0A1C7ACFAA00C5038B /* AppDelegate.swift in Sources */,
