@@ -46,24 +46,17 @@ public class AlbumViewController: UIViewController {
         albumArtist!.text = ""
         albumInfo!.text = ""
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        playQueue = appDelegate.playQueue
+        playQueue = PlayQueueManager.defaultInstance()
         
         tableSource.playQueue = playQueue!
         
-        // Do any additional setup after loading the view.
+        fetchAlbum()
+        downloadAlbumImage()
     }
 
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override public func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        fetchAlbum()
-        downloadAlbumImage()
     }
     
     @IBAction func playAlbum(sender: AnyObject) {

@@ -9,14 +9,14 @@
 import UIKit
 import AlamofireImage
 
-public protocol AlbumTableDelegate {
+public protocol AlbumTableDelegate: class {
     func albumSelected(album: SpotifyAlbum)
 }
 
 public class AlbumTableViewSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     public var imageDownloader: ImageDownloader?
-    public var albumTableDelegate: AlbumTableDelegate?
+    public weak var albumTableDelegate: AlbumTableDelegate?
 
     var albums: [SpotifyAlbum] = []
     var selectedAlbumIndex : NSIndexPath?
@@ -26,23 +26,12 @@ public class AlbumTableViewSource: NSObject, UITableViewDataSource, UITableViewD
         selectedAlbumIndex = nil
     }
     
-    //    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    //        return 44;
-    //    }
-    
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return albums.count;
     }
     
-    //    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    //        return "Title"
-    //    }
-    
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        if (indexPath == selectedAlbumIndex) {
-//            return 136
-//        }
-        return 136
+        return AlbumTableViewCell.DefaultHeight
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

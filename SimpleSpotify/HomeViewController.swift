@@ -25,6 +25,8 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
         imageCache: AutoPurgingImageCache()
     )
     
+    let disposeBag = DisposeBag.init()
+    
     let ArtistSection = 0
     let AlbumSection = 1
     let TrackSection = 2
@@ -34,8 +36,6 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
     var searchResponse: SpotifySearchRepsonse?
     var selectedArtist: SpotifyArtist?
     var selectedAlbum: SpotifyAlbum?
-    
-    
     var playQueue: PlayQueueManager?
     
     @IBOutlet weak var searchFieldWrapper: UIView!
@@ -46,8 +46,7 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        playQueue = appDelegate.playQueue!
+        playQueue = PlayQueueManager.defaultInstance()
         
         tableSource.playQueue = self.playQueue
         tableSource.imageDownloader = self.imageDownloader
@@ -79,23 +78,19 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
             .shareReplay(1)
         
         searchTextUpdated
-            .subscribeNext { query in
+            .subscribeNext { [weak self] query in
                 print("Searching")
                 SpotifyApi.searchAll(query) { (response: SpotifySearchRepsonse?, error: NSError?) in
                     if let results = response {
-                        self.tableSource.setData(
+                        self?.tableSource.setData(
                             results.tracks.items,
                             artists: results.artists.items,
                             albums: results.albums.items)
-                        self.tableView.reloadData()
+                        self?.tableView.reloadData()
                     }
                 }
-        }
-        
-        
-        
-        
-        playQueue?.login()
+            }
+            .addDisposableTo(disposeBag)
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,10 +98,15 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         print("VIEW DID APPEAR")
         if (searchField.text == "") {
             searchField.becomeFirstResponder()
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

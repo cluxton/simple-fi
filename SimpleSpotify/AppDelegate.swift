@@ -34,10 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         auth.sessionUserDefaultsKey = kSessionUserDefaultsKey
         
         playQueue = PlayQueueManager.defaultInstance()
-        //playQueue = PlayQueueManager()
-
-        
-        print("TEST!")
+                
         return true
     }
     func application(app: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
@@ -49,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
             auth.session = session
-            print("POSTING SPTSessionUpdated")
             NSNotificationCenter.defaultCenter().postNotificationName("SPTSessionUpdated", object: nil)
         }
         

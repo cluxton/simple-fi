@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 
-public protocol SearchTableSourceDelegate {
+public protocol SearchTableSourceDelegate: class {
     func artistSelected(artist: SpotifyArtist)
     func albumSelected(album: SpotifyAlbum)
     func didStartScrolling()
@@ -32,13 +32,11 @@ public class SearchTableViewSource: NSObject, UITableViewDataSource, UITableView
     public var imageDownloader: ImageDownloader?
     public var playQueue: PlayQueueManager?
     
-    public var delegate: SearchTableSourceDelegate?
+    public weak var delegate: SearchTableSourceDelegate?
     
     var tracks: [SpotifyTrack] = []
     var albums: [SpotifyAlbum] = []
     var artists: [SpotifyArtist] = []
-    
-    
     
     var selectedIndex : NSIndexPath?
     

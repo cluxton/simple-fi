@@ -58,8 +58,7 @@ public class ArtistViewController: UIViewController, AlbumTableDelegate {
             navigationController.title = artist?.name
         }
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        tracksTableSource.playQueue = appDelegate.playQueue
+        tracksTableSource.playQueue = PlayQueueManager.defaultInstance()
         
         updateTopTracks()
         updateAlbums()

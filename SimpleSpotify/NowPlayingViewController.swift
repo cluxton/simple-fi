@@ -39,6 +39,8 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
     var playQueue: PlayQueueManager?
     var currentUri: String = ""
     
+    let disposeBag = DisposeBag.init()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,16 +51,16 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
             tv.separatorStyle = .None
         }
         
-        
         Observable<Int>
             .interval(0.2, scheduler: MainScheduler.instance)
             .observeOn(MainScheduler.instance)
-            .subscribe { event in
-                self.updateSeeker()
+            .subscribe { [weak self] event in
+                self?.updateSeeker()
             }
+            .addDisposableTo(disposeBag)
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        playQueue = appDelegate.playQueue
+        
+        playQueue = PlayQueueManager.defaultInstance()
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,13 +69,16 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        playQueue?.login()
         playQueue?.addListener(self)
     }
-    
+
     override func viewWillDisappear(animated: Bool) {
         playQueue?.removeListener(self)
     }
-
+    
     @IBAction func playPause(sender: AnyObject) {
         if (playQueue!.getPlaybackState().isPlaying) {
             playQueue!.pause()

@@ -23,33 +23,44 @@ public struct PlaybackState {
 
 public class PlayQueueManager: NSObject, SPTAudioStreamingPlaybackDelegate {
     
+    private static var instance: PlayQueueManager = PlayQueueManager()
+    
     private let spotifyAuthenticator = SPTAuth.defaultInstance()
     private var player: SPTAudioStreamingController?
     private var mainQueue: [SpotifyTrack] = []
     private var upNext: [SpotifyTrack] = []
     private var combinedQueue: [SpotifyTrack] = []
-
-
     private var listeners: [PlaybackStateListener] = []
-    
-    public var currentTrack: SpotifyTrack?
+    private var isStopped: Bool = true
 
+    public var currentTrack: SpotifyTrack?
     
-    override init() {
-       super.init()
+    private override init() {
+        super.init()
         player = SPTAudioStreamingController(clientId: spotifyAuthenticator.clientID)
         player!.playbackDelegate = self
         player!.diskCache = SPTDiskCache(capacity: 1024 * 1024 * 64)
-        
+    }
+    
+    public static func defaultInstance() -> PlayQueueManager {
+        return instance
     }
     
     public func login() {
-        player!.loginWithSession(spotifyAuthenticator.session, callback: { (error: NSError!) in
-            if error != nil {
-                print("Couldn't login with session: \(error)")
-                return
-            }
-        })
+        
+        guard let session = spotifyAuthenticator.session else {
+            return
+        }
+        
+        if (session.isValid() && !player!.isPlaying) {
+            player!.loginWithSession(session, callback: { (error: NSError!) in
+                if error != nil {
+                    print("Couldn't login with session: \(error)")
+                    return
+                }
+            })
+        }
+        
     }
     
     public func queueSong(track: SpotifyTrack) {
@@ -63,10 +74,12 @@ public class PlayQueueManager: NSObject, SPTAudioStreamingPlaybackDelegate {
     }
     
     public func playSongImmediate(track: SpotifyTrack) {
+        print("CURRENT QUEUE SIZE:")
+        print(player!.currentTrackIndex)
         upNext.insert(track, atIndex: 0)
         updatePlayerQueue()
         
-        if (player!.isPlaying) {
+        if (!isStopped) {
             skip()
         }
     }
@@ -77,7 +90,7 @@ public class PlayQueueManager: NSObject, SPTAudioStreamingPlaybackDelegate {
         mainQueue.appendContentsOf(tracks)
         updatePlayerQueue()
         
-        if (player!.isPlaying) {
+        if (!isStopped) {
             skip()
         }
     }
@@ -130,8 +143,7 @@ public class PlayQueueManager: NSObject, SPTAudioStreamingPlaybackDelegate {
     
     public func audioStreaming(audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: NSURL!) {
         print("START PLAYING TRACK ")
-        
-        
+        isStopped = false
         
         let nextSong = peekNextSong()
         if (nextSong != nil && nextSong!.uri == trackUri.absoluteString) {
@@ -144,9 +156,18 @@ public class PlayQueueManager: NSObject, SPTAudioStreamingPlaybackDelegate {
             l.trackUpdated(trackUri.absoluteString)
         }
     }
-    
+
     public func audioStreaming(audioStreaming: SPTAudioStreamingController!, didStopPlayingTrack trackUri: NSURL!) {
         print("STOP PLAYING TRACK")
+        isStopped = true
+        if (mainQueue.count == 0 && upNext.count == 0) {
+            player!.stop { (error: NSError!) in
+                if error != nil {
+                    print("Error stopping: \(error)")
+                    return
+                }
+            }
+        }
     }
     
     public func audioStreaming(audioStreaming: SPTAudioStreamingController!, didSeekToOffset offset: NSTimeInterval) {
