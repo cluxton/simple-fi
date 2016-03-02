@@ -37,11 +37,13 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
     var selectedArtist: SpotifyArtist?
     var selectedAlbum: SpotifyAlbum?
     var playQueue: PlayQueueManager?
+    var firstLoad: Bool = true
     
     @IBOutlet weak var searchFieldWrapper: UIView!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var searchTypeRadio: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +64,7 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.reloadData()
         
+        searchLabel.hidden = true
     
         searchField.keyboardAppearance = UIKeyboardAppearance.Dark
         searchFieldWrapper.layer.cornerRadius = 6.0
@@ -79,15 +82,12 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
         
         searchTextUpdated
             .subscribeNext { [weak self] query in
-                print("Searching")
+                self?.searchLabel.text = "Searching..."
+                self?.searchLabel.hidden = false
+                self?.tableView.hidden = true
                 SpotifyApi.searchAll(query) { (response: SpotifySearchRepsonse?, error: NSError?) in
                     if let results = response {
-                        self?.tableSource.setData(
-                            results.tracks.items,
-                            artists: results.artists.items,
-                            albums: results.albums.items)
-                        self?.tableView.reloadData()
-                        self?.tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
+                        self?.handleSearchResults(results, query: query)
                     }
                 }
             }
@@ -101,9 +101,10 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         print("VIEW DID APPEAR")
-        if (searchField.text == "") {
+        if (firstLoad) {
             searchField.becomeFirstResponder()
         }
+        firstLoad = false
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -118,6 +119,26 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
             let vc = segue.destinationViewController as? AlbumViewController
             vc?.album = selectedAlbum
         }
+    }
+    
+    func handleSearchResults(results: SpotifySearchRepsonse, query: String) {
+        self.tableSource.setData(
+            results.tracks.items,
+            artists: results.artists.items,
+            albums: results.albums.items)
+        self.tableView.reloadData()
+        self.tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
+        
+        if(results.tracks.items.count != 0
+            || results.albums.items.count != 0
+            || results.artists.items.count != 0) {
+            self.searchLabel.hidden = true
+            self.tableView.hidden = false
+        } else {
+            self.searchLabel.text = "No results found for '\(query)'"
+            self.tableView.hidden = true
+        }
+        
     }
     
     func albumSelected(album: SpotifyAlbum) {

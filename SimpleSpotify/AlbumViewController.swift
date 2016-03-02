@@ -55,6 +55,9 @@ public class AlbumViewController: UIViewController {
         
         playButton!.layer.cornerRadius = 6
         queueButton!.layer.cornerRadius = 6
+        
+        playButton.hidden = true
+        queueButton.hidden = true
     }
 
     override public func didReceiveMemoryWarning() {
@@ -74,14 +77,16 @@ public class AlbumViewController: UIViewController {
     private
     
     func fetchAlbum() {
-        SpotifyApi.albumTracks((self.album?.uri)!) { (response: SpotifyAlbumResponse?, error: NSError?) in
+        SpotifyApi.albumTracks((self.album?.uri)!) { [weak self] (response: SpotifyAlbumResponse?, error: NSError?) in
             if let tracks = response?.tracks.items {
                 tracks.forEach { track in
-                    track.album = self.album
+                    track.album = self?.album
                 }
                 
-                self.tableSource.setData(tracks)
-                self.tableView.reloadData()
+                self?.tableSource.setData(tracks)
+                self?.tableView.reloadData()
+                self?.playButton.hidden = false
+                self?.queueButton.hidden = false
             }
         }
     }
@@ -90,10 +95,10 @@ public class AlbumViewController: UIViewController {
         if(album != nil && album!.images.count > 1) {
             let request = NSURLRequest(URL: NSURL(string: album!.images[1].url)!)
             
-            imageDownloader.downloadImage(URLRequest: request) { response in
+            imageDownloader.downloadImage(URLRequest: request) { [weak self] response in
                 
                 if let value = response.result.value {
-                    if let albumImg = self.albumArt {
+                    if let albumImg = self?.albumArt {
                         albumImg.image = value
                     }
                 }

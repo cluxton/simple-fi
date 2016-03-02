@@ -33,11 +33,6 @@ public class ArtistViewController: UIViewController, AlbumTableDelegate {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        image.layer.cornerRadius = image.frame.size.width / 2
-        image.clipsToBounds = true
-        image.layer.borderWidth = 2.0
-        image.layer.borderColor = UIColor.blackColor().CGColor
-        
         albumTableSource.imageDownloader = self.imageDownloader
         albumTableSource.albumTableDelegate = self
         

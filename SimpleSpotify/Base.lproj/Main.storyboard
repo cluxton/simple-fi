@@ -311,15 +311,28 @@
                                 <rect key="frame" x="20" y="143" width="560" height="657"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8xv-US-90P">
+                                <rect key="frame" x="20" y="378" width="560" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="oC0-0X-GO3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.016177140180000001" green="0.053786560890000001" blue="0.1107495129" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="rEV-yN-OdX" firstAttribute="trailing" secondItem="ifo-bN-J47" secondAttribute="trailingMargin" id="Kiv-ME-JbB"/>
                             <constraint firstItem="ZtE-gT-yi0" firstAttribute="top" secondItem="rEV-yN-OdX" secondAttribute="bottom" id="TDp-L8-v1g"/>
+                            <constraint firstItem="8xv-US-90P" firstAttribute="trailing" secondItem="ifo-bN-J47" secondAttribute="trailingMargin" id="Xup-Qn-WOI"/>
                             <constraint firstItem="pUD-Gn-ZAG" firstAttribute="top" secondItem="Rdk-DH-d8j" secondAttribute="bottom" constant="15" id="aAq-xy-cbs"/>
+                            <constraint firstItem="8xv-US-90P" firstAttribute="leading" secondItem="ifo-bN-J47" secondAttribute="leadingMargin" id="aW0-95-yPO"/>
                             <constraint firstItem="rEV-yN-OdX" firstAttribute="leading" secondItem="ifo-bN-J47" secondAttribute="leadingMargin" id="c5W-UR-C3a"/>
+                            <constraint firstItem="8xv-US-90P" firstAttribute="centerX" secondItem="ifo-bN-J47" secondAttribute="centerX" id="rb3-Nc-v0E"/>
                             <constraint firstItem="pUD-Gn-ZAG" firstAttribute="leading" secondItem="ifo-bN-J47" secondAttribute="leadingMargin" id="rmw-tT-xcs"/>
                             <constraint firstItem="rEV-yN-OdX" firstAttribute="top" secondItem="pUD-Gn-ZAG" secondAttribute="bottom" constant="20" id="uIm-to-c9l"/>
+                            <constraint firstItem="8xv-US-90P" firstAttribute="centerY" secondItem="ifo-bN-J47" secondAttribute="centerY" id="wle-u1-c3f"/>
                             <constraint firstItem="pUD-Gn-ZAG" firstAttribute="trailing" secondItem="ifo-bN-J47" secondAttribute="trailingMargin" id="x3x-bF-8UN"/>
                         </constraints>
                     </view>
@@ -327,6 +340,7 @@
                     <connections>
                         <outlet property="searchField" destination="k8m-NU-nhP" id="CWS-8t-K6z"/>
                         <outlet property="searchFieldWrapper" destination="pUD-Gn-ZAG" id="cPd-Ho-Gck"/>
+                        <outlet property="searchLabel" destination="8xv-US-90P" id="y6b-to-a7n"/>
                         <outlet property="tableView" destination="rEV-yN-OdX" id="ZsA-Ls-lOe"/>
                         <segue destination="bWF-b0-CcH" kind="show" identifier="showArtist" id="nQ2-qm-AFq"/>
                         <segue destination="DgO-TX-lOu" kind="show" identifier="showAlbum" id="hd4-zX-1hf"/>
@@ -373,28 +387,28 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="diP-FB-4LV">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="diP-FB-4LV">
                                 <rect key="frame" x="179" y="157" width="120" height="46"/>
                                 <color key="backgroundColor" red="0.075194597239999994" green="0.23318156600000001" blue="0.56664574150000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="Shf-LY-2rO"/>
                                     <constraint firstAttribute="height" constant="46" id="qpL-LG-TWu"/>
                                 </constraints>
-                                <state key="normal" title="Play now">
+                                <state key="normal" title=" Play now" image="playSmall">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="playAlbum:" destination="DgO-TX-lOu" eventType="touchUpInside" id="lVS-GD-YcI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SE7-K8-bST">
-                                <rect key="frame" x="317" y="157" width="141" height="46"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SE7-K8-bST">
+                                <rect key="frame" x="317" y="157" width="150" height="46"/>
                                 <color key="backgroundColor" red="0.075194597239999994" green="0.23318156600000001" blue="0.56664574150000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="cnK-03-Kbl"/>
-                                    <constraint firstAttribute="width" constant="141" id="mz2-Wp-tiz"/>
+                                    <constraint firstAttribute="width" constant="150" id="mz2-Wp-tiz"/>
                                 </constraints>
-                                <state key="normal" title="Add to queue">
+                                <state key="normal" title=" Add to queue" image="queueSmall">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -774,6 +788,8 @@
         <image name="default-album" width="120" height="120"/>
         <image name="next" width="17" height="23"/>
         <image name="play" width="62" height="62"/>
+        <image name="playSmall" width="10" height="14"/>
+        <image name="queueSmall" width="14" height="16"/>
         <image name="showQueue" width="13" height="13"/>
         <image name="spotify-login" width="244" height="44"/>
     </resources>
