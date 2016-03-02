@@ -8,25 +8,27 @@
 
 import UIKit
 
-class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPlaybackDelegate {
+class AuthViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPlaybackDelegate {
     
+    @IBOutlet weak var Header: UILabel!
+    @IBOutlet weak var Subtitle: UILabel!
+    @IBOutlet weak var LoginButton: UIButton!
+    
+    var firstLoad: Bool = true
     var player: SPTAudioStreamingController?
     var spotifyAuthVC: SPTAuthViewController?
     
     let spotifyAuthenticator = SPTAuth.defaultInstance()
     
-    var firstLoad: Bool = true
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "validSessionAquired", name: "SPTSessionUpdated", object: nil)
-        //setupSpotifyPlayer()
-        // Do any additional setup after loading the view, typically from a nib.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleSpotifySessionUpdated", name: "SPTSessionUpdated", object: nil)
+        self.setViewText("", subtitle: "")
+        LoginButton?.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -39,14 +41,14 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     }
     
     @IBAction func loginWithSpotify(sender: AnyObject) {
-        refreshSession()
+        self.reauthenticate()
     }
     
     func refreshSession() {
-        
-        print("REFRESH SESSION")
         guard let session = spotifyAuthenticator.session else {
-            self.reauthenticate()
+            //self.reauthenticate()
+            self.setViewText("Log in to spotify", subtitle: "A Spotify Premium account is requied to use this application.")
+            self.LoginButton?.hidden = false
             return
         }
         
@@ -56,23 +58,28 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
         }
         
         if (!session.isValid() && spotifyAuthenticator.hasTokenRefreshService) {
-            print ("RENEWING")
             
-            spotifyAuthenticator.renewSession(session) { (error: NSError!, session: SPTSession!) in
+            setViewText("Logging in to spotify...", subtitle: "Please wait.")
+            LoginButton?.hidden = true
+            
+            spotifyAuthenticator.renewSession(session) { [weak self] (error: NSError!, session: SPTSession!) in
                 print("CALLBACK")
                 if error != nil {
                     print("    Couldn't login with session: \(error)")
-                    self.reauthenticate()
+                    self?.logonFailed()
                     return
                 }
                 
-                self.validSessionAquired()
+                self?.validSessionAquired()
             }
             print("DONE")
             return
         }
         
-        self.reauthenticate()
+        self.setViewText("Log in to spotify", subtitle: "A Spotify Premium account is requied to use this application.")
+        self.LoginButton?.hidden = false
+        
+        //self.reauthenticate()
     }
     
     func reauthenticate() {
@@ -86,38 +93,42 @@ class ViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingPl
     }
     
     func validSessionAquired() {
-        print ("VALIDATED!!!")
+        print("VALID SESSION")
+        self.setViewText("Log in successful", subtitle: "")
+        self.LoginButton?.hidden = true
+        
         PlayQueueManager.defaultInstance().login()
         self.dismissViewControllerAnimated(true, completion: nil)
-        
-        //performSegueWithIdentifier("showHome", sender: self)
+    }
+    
+    func setViewText(header: String, subtitle: String) {
+        Header?.text = header
+        Subtitle?.text = subtitle
     }
     
     func logonFailed() {
-        print("AUTHENTICATION FAILED")
+        self.setViewText("Unable to log in", subtitle: "Please try again.")
+        self.LoginButton?.hidden = false
+        spotifyAuthVC?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // SPTAuthViewDelegate protocol methods
-    
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
-        print("AUTH VC DELEGATE SUCCESS");
         self.validSessionAquired()
     }
     
     func authenticationViewControllerDidCancelLogin(authenticationViewController: SPTAuthViewController!) {
-        print("login cancelled")
         logonFailed()
     }
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!) {
-        print("login failed: \(error)")
+        print("    didFailToLogin: \(error)")
         logonFailed()
     }
     
     func handleSpotifySessionUpdated() {
-        spotifyAuthVC?.dismissViewControllerAnimated(true, completion: nil)
-        print("LOGON SUCCESS");
-        validSessionAquired()
+        spotifyAuthVC?.dismissViewControllerAnimated(true) { [weak self] in
+            self?.validSessionAquired()
+        }
     }
 
 }
