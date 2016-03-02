@@ -54,8 +54,28 @@ public class SongTableViewCell: UITableViewCell {
     public func setSong(track: SpotifyTrack) {
         self.track = track
         title!.text = track.name
-        subtitle!.text = track.album?.name
+        subtitle!.text = getSubtitle(track)
         status!.text = ""
+    }
+    
+    private
+    
+    func getSubtitle(track: SpotifyTrack) -> String {
+        var components: [String] = []
+        
+        if (track.artists.count > 0) {
+            let artists = track.artists
+                .map { $0.name }
+                .joinWithSeparator(", ")
+            
+            components.append(artists)
+        }
+        
+        if let album = track.album {
+            components.append(album.name)
+        }
+        
+        return components.joinWithSeparator(" - ")
     }
     
     @IBAction func playTrack(sender: AnyObject) {
