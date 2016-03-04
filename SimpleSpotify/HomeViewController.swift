@@ -88,6 +88,8 @@ class HomeViewController: UIViewController, SearchTableSourceDelegate {
                 SpotifyApi.searchAll(query) { (response: SpotifySearchRepsonse?, error: NSError?) in
                     if let results = response {
                         self?.handleSearchResults(results, query: query)
+                    } else {
+                        self?.searchLabel.text = "There was an error while searching."
                     }
                 }
             }
