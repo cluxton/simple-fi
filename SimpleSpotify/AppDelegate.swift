@@ -52,8 +52,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     func application(app: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         let auth = SPTAuth.defaultInstance()
-
-        let callback: SPTAuthCallback = { (error: NSError!, session: SPTSession!) in
+        
+        if (!auth.canHandleURL(url)) {
+            return false
+        }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("SPTReturnAfterAuth", object: nil)
+        auth.handleAuthCallbackWithTriggeredAuthURL(url) { (error: NSError!, session: SPTSession!) in
             if error != nil {
                 print("Couldn't login with session: \(error)")
                 return
@@ -63,12 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName("SPTSessionUpdated", object: nil)
         }
         
-        if (auth.canHandleURL(url)) {
-            auth.handleAuthCallbackWithTriggeredAuthURL(url, callback: callback)
-            return true
-        }
-        
-        return false
+        return true
     }
 
     func applicationWillResignActive(application: UIApplication) {

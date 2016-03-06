@@ -79,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="570" y="1193"/>
+            <point key="canvasLocation" x="-296" y="2107"/>
         </scene>
         <!--Now Playing View Controller-->
         <scene sceneID="fqt-pd-IPH">
@@ -348,7 +348,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ye-WI-k4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="570" y="2107"/>
+            <point key="canvasLocation" x="418" y="1159"/>
         </scene>
         <!--View Album-->
         <scene sceneID="kFB-LJ-oU6">
@@ -466,7 +466,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WYp-GZ-VUe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1257" y="3087"/>
+            <point key="canvasLocation" x="441" y="2147"/>
         </scene>
         <!--Artist View Controller-->
         <scene sceneID="S1P-pt-bHk">
@@ -557,7 +557,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EZR-Rq-yVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1289" y="2107"/>
+            <point key="canvasLocation" x="1165" y="1159"/>
         </scene>
         <!--Root Navigation View Controller-->
         <scene sceneID="b06-XR-t4C">
@@ -775,7 +775,6 @@
                         <outlet property="trackArtist" destination="AlK-bP-PRt" id="9lx-jp-sZ3"/>
                         <outlet property="trackTitle" destination="pSJ-tu-4Wc" id="YaX-fL-opF"/>
                         <segue destination="nuX-hN-88N" kind="presentation" identifier="showNowPlaying" id="VU2-e8-No0"/>
-                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="showAuthenticator" id="Uwg-vV-7J7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DjE-9K-ayA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -794,7 +793,6 @@
         <image name="spotify-login" width="244" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="q36-JH-gDH"/>
         <segue reference="7k3-ex-4cs"/>
     </inferredMetricsTieBreakers>
 </document>

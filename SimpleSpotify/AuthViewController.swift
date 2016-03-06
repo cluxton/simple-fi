@@ -22,6 +22,7 @@ class AuthViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreami
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleReturnToApp", name: "SPTReturnAfterAuth", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleSpotifySessionUpdated", name: "SPTSessionUpdated", object: nil)
         self.setViewText("", subtitle: "")
         LoginButton?.hidden = true
@@ -47,7 +48,7 @@ class AuthViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreami
     func refreshSession() {
         guard let session = spotifyAuthenticator.session else {
             //self.reauthenticate()
-            self.setViewText("Log in to spotify", subtitle: "A Spotify Premium account is requied to use this application.")
+            self.setViewText("Log in to Spotify", subtitle: "A Spotify Premium account is requied to use this application.")
             self.LoginButton?.hidden = false
             return
         }
@@ -59,7 +60,7 @@ class AuthViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreami
         
         if (!session.isValid() && spotifyAuthenticator.hasTokenRefreshService) {
             
-            setViewText("Logging in to spotify...", subtitle: "Please wait.")
+            setViewText("Logging in to Spotify...", subtitle: "Please wait.")
             LoginButton?.hidden = true
             
             spotifyAuthenticator.renewSession(session) { [weak self] (error: NSError!, session: SPTSession!) in
@@ -96,9 +97,9 @@ class AuthViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreami
         print("VALID SESSION")
         self.setViewText("Log in successful", subtitle: "")
         self.LoginButton?.hidden = true
-        
         PlayQueueManager.defaultInstance().login()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(false, completion: nil)
+
     }
     
     func setViewText(header: String, subtitle: String) {
@@ -126,9 +127,13 @@ class AuthViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreami
     }
     
     func handleSpotifySessionUpdated() {
-        spotifyAuthVC?.dismissViewControllerAnimated(true) { [weak self] in
-            self?.validSessionAquired()
-        }
+        self.validSessionAquired()
+    }
+    
+    func handleReturnToApp() {
+        self.setViewText("Logging in to Spotify...", subtitle: "Please wait.")
+        self.LoginButton?.hidden = true
+        self.spotifyAuthVC?.dismissViewControllerAnimated(false, completion: nil)
     }
 
 }
