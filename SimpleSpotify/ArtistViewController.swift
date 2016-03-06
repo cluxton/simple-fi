@@ -114,12 +114,15 @@ public class ArtistViewController: UIViewController, AlbumTableDelegate {
     }
     
     func downloadArtistImage() {
-        if(artist != nil && artist!.images.count > 1) {
-            let request = NSURLRequest(URL: NSURL(string: artist!.images[1].url)!)
+        
+        guard let images = artist?.images else {
+            return
+        }
+        
+        if(images.count > 1) {
+            let request = NSURLRequest(URL: NSURL(string: images[1].url)!)
             
             imageDownloader.downloadImage(URLRequest: request) { response in
-                response.result.value
-                
                 if let value = response.result.value {
                     if let artistImage = self.image {
                         artistImage.image = value

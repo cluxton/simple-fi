@@ -92,11 +92,14 @@ public class AlbumViewController: UIViewController {
     }
     
     func downloadAlbumImage() {
-        if(album != nil && album!.images.count > 1) {
-            let request = NSURLRequest(URL: NSURL(string: album!.images[1].url)!)
+        guard let images = album?.images else {
+            return
+        }
+        
+        if(images.count > 1) {
+            let request = NSURLRequest(URL: NSURL(string: images[1].url)!)
             
             imageDownloader.downloadImage(URLRequest: request) { [weak self] response in
-                
                 if let value = response.result.value {
                     if let albumImg = self?.albumArt {
                         albumImg.image = value

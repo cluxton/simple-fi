@@ -158,19 +158,21 @@ class NowPlayingViewController: UIViewController, PlaybackStateListener {
     
     func downloadTrackImage(track: SpotifyTrack) {
         
-        if let album = track.album {
-            let request = NSURLRequest(URL: NSURL(string: album.images[0].url)!)
+        guard let album = track.album else {
+            return
+        }
+        
+        let request = NSURLRequest(URL: NSURL(string: album.images[0].url)!)
+        
+        imageDownloader.downloadImage(URLRequest: request) { response in
             
-            imageDownloader.downloadImage(URLRequest: request) { response in
-                
-                if (track.uri != self.currentUri) {
-                    return
-                }
-                
-                if let value = response.result.value {
-                    if let trackImage = self.trackImage {
-                        trackImage.image = value
-                    }
+            if (track.uri != self.currentUri) {
+                return
+            }
+            
+            if let value = response.result.value {
+                if let trackImage = self.trackImage {
+                    trackImage.image = value
                 }
             }
         }

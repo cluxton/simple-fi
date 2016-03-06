@@ -131,15 +131,23 @@ public class SpotifyApi {
     
     static func performRequest<ReturnType: EVObject>(callback: (ReturnType?, NSError?) -> Void, requestFactory: (accessToken: String) throws -> NSURLRequest) {
         let at = SPTAuth.defaultInstance().session?.accessToken
-        //SPTAuth.defaultInstance().session?.accessToken
         do {
             let request = try requestFactory(accessToken: at!)
             SPTRequest.sharedHandler().performRequest(request) { (error: NSError!, response: NSURLResponse!, data: NSData!) in
+                
+                if(error != nil) {
+                    print("Error performing request: \(error)")
+                    callback(nil, nil)
+                    return
+                }
+                
+                
                 let searchResponse = ReturnType(json: String(data: data, encoding: NSUTF8StringEncoding));
                 callback(searchResponse, nil)
             }
             
         } catch {
+            print("CAUGHT ERROR: \(error)")
             callback(nil, nil)
         }
     }
